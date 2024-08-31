@@ -16,7 +16,7 @@ int main( int argc,  char** argv )
 {
    ulong i;
 
-   printf( "TangerineRiscVSOC emulator B20240830 -qUBECk-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240831 -qUBECk78@wp.pl-\n\n" );
 
    //hardware emulation
 
@@ -44,27 +44,24 @@ int main( int argc,  char** argv )
 
 
    rvReset( &cpuctx );
+   if( srecLoadFile( ( char* )"boot.rec", &i ) )
+   {
+      printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
+   }
 
-   srecLoadFile( ( char* )"fractal.rec" );
+   srecLoadFile( ( char* )"fractal.rec", &i );
+   cpuctx.pc = i;
 
-   //cpuctx.pc = 0x2000;
-   cpuctx.pc = 0x20780000;
-   //cpuctx.pc = 0x30000010;
 
    do
    {
-
-      //simulate 60fps refresh
-//      SDL_Delay( 1000 / 60 );
 
       for( i = 0; i < 1000000; i++ )
       {
          rvStep( &cpuctx );
       }
 
-
       tgRedrawScreen( &tgctx );
-
 
       if( tgHandleEvents( &tgctx ) == RV_QUIT )
       {
