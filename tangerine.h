@@ -4,6 +4,8 @@
 #include "gftypes.h"
 #include "sdramDmaRegs.h"
 #include "rootRegs.h"
+#include "spiSdCardRegs.h"
+#include "usbHostRegs.h"
 
 #include <SDL2/SDL.h>
 
@@ -45,7 +47,8 @@ typedef struct _tangerineCtx_t
 
    tgRootRegs_t       rootRegs;
    tgSDRAMDMARegs_t   sdramDMARegs;
-
+   tgSpiSDCardRegs_t  spiSdCardRegs;
+   tgUsbHostRegs_t    usbHostRegs;
 
 }tangerineCtx_t;
 

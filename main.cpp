@@ -16,9 +16,8 @@ int main( int argc,  char** argv )
 {
    ulong i;
 
-   printf( "TangerineRiscVSOC emulator B20240830 -qUBECk-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240901 -qUBECk78@wp.pl-\n\n" );
 
-   //hardware emulation
 
    //memory access
    if( mioInit( &tgctx) )
@@ -29,6 +28,11 @@ int main( int argc,  char** argv )
 
    }
 
+   cpuctx.fetchInstruction = fetchInstruction;
+   cpuctx.fetchData        = fetchData;
+   cpuctx.storeData        = storeData;
+
+   //hardware emulation
    if( tgInit( &tgctx ) )
    {
       
@@ -38,33 +42,38 @@ int main( int argc,  char** argv )
    }
 
 
-   cpuctx.fetchInstruction = fetchInstruction;
-   cpuctx.fetchData        = fetchData;
-   cpuctx.storeData        = storeData;
-
-
    rvReset( &cpuctx );
+   if( srecLoadFile( ( char* )"boot.rec", &i ) )
+   {
+      printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
+   }
 
-   srecLoadFile( ( char* )"fractal.rec" );
-
-   //cpuctx.pc = 0x2000;
-   cpuctx.pc = 0x20780000;
-   //cpuctx.pc = 0x30000010;
+   if( argc > 1 )
+   {
+      printf( "Loading: \"%s\"\n", argv[1] );
+      if( srecLoadFile( argv[1], &i ) )
+      {
+         printf( "error\n" );
+      }
+      else
+      {
+         cpuctx.pc = i;
+      }
+   }
+   else
+   {
+      printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
+   }
 
    do
    {
-
-      //simulate 60fps refresh
-//      SDL_Delay( 1000 / 60 );
 
       for( i = 0; i < 1000000; i++ )
       {
          rvStep( &cpuctx );
       }
 
-
       tgRedrawScreen( &tgctx );
-
 
       if( tgHandleEvents( &tgctx ) == RV_QUIT )
       {

@@ -24,7 +24,7 @@ ulong tgInit( tangerineCtx_t *ctx )
      return RV_ERROR;
    }
 
-   ctx->window = SDL_CreateWindow( "TangerineRiscVSOC simulator", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_ALLOW_HIGHDPI );
+   ctx->window = SDL_CreateWindow( "TangerineRiscVSOC simulator ( RISC-V 32IM ) -qubeck78@wp.pl-", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_ALLOW_HIGHDPI );
 
    if( ctx->window == NULL ) 
    {
@@ -95,7 +95,7 @@ ulong tgInit( tangerineCtx_t *ctx )
    in = fopen( "font.dat", "rb" );
    if( !in )
    {
-     printf(" Error: Can't load font.dat\n" );
+     printf( "Error: Can't load font.dat. Place font.dat file in the same directory as emulator executable.\n" );
      return RV_ERROR;
    }
 
@@ -106,8 +106,8 @@ ulong tgInit( tangerineCtx_t *ctx )
 
    rootRegsInit( &ctx->rootRegs );
    sdramDMARegsInit( &ctx->sdramDMARegs );
-
-   
+   spiSdCardRegsInit( &ctx->spiSdCardRegs );
+   usbHostRegsInit( &ctx->usbHostRegs );
 
    return RV_OK;        
 }

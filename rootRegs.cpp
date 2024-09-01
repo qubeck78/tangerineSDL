@@ -5,9 +5,10 @@
 ulong rootRegsInit( tgRootRegs_t *regs )
 {
 
-   regs->videoMuxMode   = 0x0;
    regs->id             = 0x80000000;
    regs->version        = 0x20240828;
+
+   regs->videoMuxMode   = 0x0;
    regs->videoVSync     = 1;
    
    regs->tickTimerValue = SDL_GetTicks();

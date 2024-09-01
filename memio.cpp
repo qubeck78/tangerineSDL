@@ -59,6 +59,20 @@ ulong fetchData( ulong addr )
 
             break;
 
+         case 0xf0300000:
+
+            //usb host regs
+            return usbHostRegsReadReg( &tgctx->usbHostRegs, addr & 0xffff );
+            
+            break;
+
+         case 0xf0500000:
+
+            //spi sd card regs
+            return spiSdCardRegsReadReg( &tgctx->spiSdCardRegs, addr & 0xffff );
+            
+            break;
+
          case 0xf0800000:
 
             //sdram dma regs
@@ -110,6 +124,20 @@ ulong storeData( ulong addr, uchar mask, ulong data )
             //root regs
 
             return rootRegsWriteReg( &tgctx->rootRegs, addr & 0xffff, data );
+            break;
+
+         case 0xf0300000:
+
+            //usb host regs
+            return usbHostRegsWriteReg( &tgctx->usbHostRegs, addr & 0xffff, data );
+            
+            break;
+
+         case 0xf0500000:
+
+            //spi sd card regs
+            return spiSdCardRegsWriteReg( &tgctx->spiSdCardRegs, addr & 0xffff, data );
+            
             break;
 
          case 0xf0800000:

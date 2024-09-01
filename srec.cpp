@@ -221,19 +221,24 @@ static ulong decodeAndExecuteS7_8_9Record( char *buf, ulong recordType )
    return address;
 } 
 
-ulong srecLoadFile( char *path )
+ulong srecLoadFile( char *path, ulong *startPc )
 {
    FILE *in;
 
    ulong    rv;
    ulong    i;
 
+   if( startPc )
+   {
+      *startPc = 0;
+   }
+
    in = fopen( path, "rb" );
 
    if( !in )
    {
       printf( "srecLoadFile: Can't open %s\n", path );
-      return 0;
+      return 1;
    }
 
 
@@ -273,17 +278,36 @@ ulong srecLoadFile( char *path )
                break;
                
             case '7':
-               rv = decodeAndExecuteS7_8_9Record( lineBuffer, 7 );               
+
+               if( startPc )
+               {
+                  *startPc = decodeAndExecuteS7_8_9Record( lineBuffer, 7 );               
+               }
+               
+               rv = 0;
+
                break;
                
             case '8':
             
-               rv = decodeAndExecuteS7_8_9Record( lineBuffer, 8 );
+               if( startPc )
+               {
+                  *startPc = decodeAndExecuteS7_8_9Record( lineBuffer, 8 );
+               }
+
+               rv = 0;
+
                break;
 
             case '9':
-            
-               rv = decodeAndExecuteS7_8_9Record( lineBuffer, 9 );
+
+
+               if( startPc )
+               {
+                  *startPc = decodeAndExecuteS7_8_9Record( lineBuffer, 9 );
+               }
+               rv = 0;
+
                break;
                
             default:
@@ -301,6 +325,6 @@ ulong srecLoadFile( char *path )
 
    fclose( in );
 
-   return 1;
+   return rv;
 }
 
