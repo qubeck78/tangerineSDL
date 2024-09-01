@@ -47,6 +47,6 @@ clean:
 
 run: $(TARGET).exe
 	cd bin
-	start $(TARGET).exe
+	start $(TARGET).exe fractal.rec
 	
 	

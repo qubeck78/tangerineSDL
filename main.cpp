@@ -16,9 +16,8 @@ int main( int argc,  char** argv )
 {
    ulong i;
 
-   printf( "TangerineRiscVSOC emulator B20240831 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240901 -qUBECk78@wp.pl-\n\n" );
 
-   //hardware emulation
 
    //memory access
    if( mioInit( &tgctx) )
@@ -29,6 +28,11 @@ int main( int argc,  char** argv )
 
    }
 
+   cpuctx.fetchInstruction = fetchInstruction;
+   cpuctx.fetchData        = fetchData;
+   cpuctx.storeData        = storeData;
+
+   //hardware emulation
    if( tgInit( &tgctx ) )
    {
       
@@ -38,20 +42,28 @@ int main( int argc,  char** argv )
    }
 
 
-   cpuctx.fetchInstruction = fetchInstruction;
-   cpuctx.fetchData        = fetchData;
-   cpuctx.storeData        = storeData;
-
-
    rvReset( &cpuctx );
    if( srecLoadFile( ( char* )"boot.rec", &i ) )
    {
       printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
    }
 
-   srecLoadFile( ( char* )"fractal.rec", &i );
-   cpuctx.pc = i;
-
+   if( argc > 1 )
+   {
+      printf( "Loading: \"%s\"\n", argv[1] );
+      if( srecLoadFile( argv[1], &i ) )
+      {
+         printf( "error\n" );
+      }
+      else
+      {
+         cpuctx.pc = i;
+      }
+   }
+   else
+   {
+      printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
+   }
 
    do
    {
