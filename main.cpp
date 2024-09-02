@@ -55,6 +55,12 @@ int main( int argc,  char** argv )
       printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
    }
 
+   //usb host
+   if( usbHostInit( &tgctx.usbHostContext ) )
+   {
+      printf( "Error, can't init usb host emulation\n" );            
+   }
+
    //hardware emulation
    if( tgInit( &tgctx ) )
    {
@@ -97,6 +103,8 @@ int main( int argc,  char** argv )
       }
 
       tgRedrawScreen( &tgctx );
+
+      tgctx.rootRegs.frameTimer++;
 
       if( tgHandleEvents( &tgctx ) == RV_QUIT )
       {

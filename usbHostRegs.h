@@ -3,6 +3,8 @@
 
 #include "gftypes.h"
 
+#include "usbHost.h"
+
 typedef struct _tgUsbHostRegs_t
 {
     //usb HID host
@@ -17,8 +19,8 @@ typedef struct _tgUsbHostRegs_t
 
 
 ulong usbHostRegsInit( tgUsbHostRegs_t *regs );
-ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, ushort addr );
-ulong usbHostRegsWriteReg(  tgUsbHostRegs_t *regs, ushort addr, ulong value );
+ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort addr );
+ulong usbHostRegsWriteReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort addr, ulong value );
 
 
 #endif

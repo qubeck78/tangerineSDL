@@ -11,7 +11,7 @@ ulong usbHostRegsInit( tgUsbHostRegs_t *regs )
    return RV_OK;
 }
 
-ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, ushort addr )
+ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort addr )
 {
 
    switch( addr >> 2 )
@@ -30,13 +30,13 @@ ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, ushort addr )
 
       case 0x02:
 
-         return regs->usbHidKeyboardStatus;
+         return usbHostFifoEmpty( ctx ) & 1;
 
          break;
 
       case 0x03:
 
-         return regs->usbHidKeyboardData;
+         return usbHostFifoGet( ctx );
 
          break;
       }
@@ -44,7 +44,7 @@ ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, ushort addr )
    return 0;
 }
 
-ulong usbHostRegsWriteReg(  tgUsbHostRegs_t *regs, ushort addr, ulong value )
+ulong usbHostRegsWriteReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort addr, ulong value )
 {
 
    return RV_OK;

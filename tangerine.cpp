@@ -1,5 +1,6 @@
 
 #include "tangerine.h"
+#include "usbHost.h"
 
 #include <stdio.h>
 
@@ -121,7 +122,19 @@ ulong tgHandleEvents( tangerineCtx_t *ctx )
       if( event.type == SDL_QUIT ) 
       {
          return RV_QUIT;
+
+      }else if( event.type == SDL_KEYDOWN )
+      {
+
+         usbHostKeyDownEvent( &ctx->usbHostContext, event.key.keysym.scancode );         
+
+      }else if( event.type == SDL_KEYUP )
+      {
+
+         usbHostKeyUpEvent( &ctx->usbHostContext, event.key.keysym.scancode );         
+         
       }
+
    }
 
 
