@@ -6,8 +6,8 @@ LD = x86_64-w64-mingw32-g++
 
 all: $(TARGET).exe
 
-$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -26,6 +26,9 @@ rootRegs.o: rootRegs.cpp
 
 spiSdCardRegs.o: spiSdCardRegs.cpp
 	$(CC) -o spiSdCardRegs.o spiSdCardRegs.cpp
+
+sdCard.o: sdCard.cpp
+	$(CC) -o sdCard.o sdCard.cpp
 
 usbHostRegs.o: usbHostRegs.cpp
 	$(CC) -o usbHostRegs.o usbHostRegs.cpp 
@@ -47,6 +50,6 @@ clean:
 
 run: $(TARGET).exe
 	cd bin
-	start $(TARGET).exe fractal.rec
+	start $(TARGET).exe slideshow.rec
 	
 	

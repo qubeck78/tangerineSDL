@@ -1,3 +1,19 @@
+
+/*
+
+   Tangerine Risc-V SOC emulator
+
+   Copyright (c) 2024, Michał Kubecki - qubeck78@wp.pl
+
+   Supplied under BSD-3 Clause license ( see LICENSE file )
+
+
+   Note: While not enforced by the license, I kindly request that any application 
+   using this software includes "Michal Kubecki - qubeck78@wp.pl" in its about 
+   or credits section as a token of appreciation for the open-source contribution.
+
+*/
+
 #include "main.h"
 #include <cstring>
 #include <climits>
@@ -7,6 +23,7 @@
 #include "emul.h"
 #include "memio.h"
 #include "srec.h"
+#include "sdCard.h"
 
 tangerineCtx_t tgctx;
 emContext_t    cpuctx;
@@ -16,7 +33,7 @@ int main( int argc,  char** argv )
 {
    ulong i;
 
-   printf( "TangerineRiscVSOC emulator B20240901 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240902 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -31,6 +48,12 @@ int main( int argc,  char** argv )
    cpuctx.fetchInstruction = fetchInstruction;
    cpuctx.fetchData        = fetchData;
    cpuctx.storeData        = storeData;
+
+   //sd card
+   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+   {
+      printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
+   }
 
    //hardware emulation
    if( tgInit( &tgctx ) )

@@ -1,5 +1,7 @@
 #include "spiSDCardRegs.h"
 
+#include <cstdio>
+
 ulong spiSdCardRegsInit( tgSpiSDCardRegs_t *regs )
 {
    
@@ -12,7 +14,7 @@ ulong spiSdCardRegsInit( tgSpiSDCardRegs_t *regs )
    return RV_OK;
 }
 
-ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, ushort addr )
+ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr )
 {
 
    switch( addr >> 2 )
@@ -31,11 +33,13 @@ ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, ushort addr )
 
       case 0x02:
 
-         return regs->spiData;
+         return sdcSPIRead( sdctx );
 
          break;
 
       case 0x03:
+
+         //printf( "spiStatus read: %x\n", regs->spiStatus );
 
          return regs->spiStatus;
 
@@ -46,9 +50,19 @@ ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, ushort addr )
    return 0;
 }
 
-ulong spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, ushort addr, ulong value )
+ulong spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value )
 {
 
+   switch( addr >> 2 )
+   {
+
+      case 0x02:
+
+         sdcSPIWrite( sdctx, value );
+         
+         break;
+
+      }
 
    return RV_OK;
 }

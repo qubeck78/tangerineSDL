@@ -3,6 +3,8 @@
 
 #include "gftypes.h"
 
+#include "sdCard.h"
+
 typedef struct _tgSpiSDCardRegs_t
 {
 
@@ -19,8 +21,8 @@ typedef struct _tgSpiSDCardRegs_t
 
 
 ulong spiSdCardRegsInit( tgSpiSDCardRegs_t *regs );
-ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, ushort addr );
-ulong spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, ushort addr, ulong value );
+ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr );
+ulong spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value );
 
 
 #endif

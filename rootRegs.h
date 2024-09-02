@@ -3,6 +3,8 @@
 
 #include "gftypes.h"
 
+#include "sdCard.h"
+
 typedef struct _tgRootRegs_t
 {
     volatile ulong id;
@@ -33,7 +35,7 @@ typedef struct _tgRootRegs_t
 
 ulong rootRegsInit( tgRootRegs_t *regs );
 ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr );
-ulong rootRegsWriteReg(  tgRootRegs_t *regs, ushort addr, ulong value );
+ulong rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value );
 
 
 #endif
