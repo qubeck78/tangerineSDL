@@ -69,7 +69,7 @@ ulong fetchData( ulong addr )
          case 0xf0500000:
 
             //spi sd card regs
-            return spiSdCardRegsReadReg( &tgctx->spiSdCardRegs, addr & 0xffff );
+            return spiSdCardRegsReadReg( &tgctx->spiSdCardRegs, &tgctx->sdCardContext, addr & 0xffff );
             
             break;
 
@@ -123,7 +123,7 @@ ulong storeData( ulong addr, uchar mask, ulong data )
 
             //root regs
 
-            return rootRegsWriteReg( &tgctx->rootRegs, addr & 0xffff, data );
+            return rootRegsWriteReg( &tgctx->rootRegs, &tgctx->sdCardContext, addr & 0xffff, data );
             break;
 
          case 0xf0300000:
@@ -136,7 +136,7 @@ ulong storeData( ulong addr, uchar mask, ulong data )
          case 0xf0500000:
 
             //spi sd card regs
-            return spiSdCardRegsWriteReg( &tgctx->spiSdCardRegs, addr & 0xffff, data );
+            return spiSdCardRegsWriteReg( &tgctx->spiSdCardRegs, &tgctx->sdCardContext, addr & 0xffff, data );
             
             break;
 

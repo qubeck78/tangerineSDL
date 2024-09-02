@@ -84,7 +84,7 @@ ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr )
    return 0;
 }
 
-ulong rootRegsWriteReg(  tgRootRegs_t *regs, ushort addr, ulong value )
+ulong rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value )
 {
    switch( addr >> 2 )
    {
@@ -98,6 +98,7 @@ ulong rootRegsWriteReg(  tgRootRegs_t *regs, ushort addr, ulong value )
       case 0x05:
 
          regs->gpoPort = value;
+         sdcSPICE( sdctx, value & 1 ); //sd CE connected to GPIO 0
 
          break;
 

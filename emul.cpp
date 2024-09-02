@@ -181,7 +181,14 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->sregs[ rd ] = ctx->sregs[rs1] / ctx->sregs[rs2];
+                  if( ctx->regs[rs2] )
+                  {
+                     ctx->sregs[ rd ] = ctx->sregs[rs1] / ctx->sregs[rs2];
+                  }
+                  else
+                  {
+                     ctx->regs[ rd ] = 0;                     
+                  }
                }
                break;
 
@@ -193,7 +200,15 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->regs[ rd ] = ctx->regs[rs1] / ctx->regs[rs2];
+                  if( ctx->regs[rs2] )
+                  {
+                     ctx->regs[ rd ] = ctx->regs[rs1] / ctx->regs[rs2];
+                  }
+                  else
+                  {
+                     ctx->regs[ rd ] = 0;
+                  }
+
                }
                break;
 
@@ -205,7 +220,14 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->sregs[ rd ] = ctx->sregs[rs1] % ctx->sregs[rs2];
+                  if( ctx->regs[rs2] )
+                  {
+                     ctx->sregs[ rd ] = ctx->sregs[rs1] % ctx->sregs[rs2];
+                  }
+                  else
+                  {
+                     ctx->sregs[ rd ] = 0;
+                  }
                }
                break;
  
@@ -217,7 +239,14 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->regs[ rd ] = ctx->regs[rs1] % ctx->regs[rs2];
+                  if( ctx->regs[rs2] )
+                  {
+                     ctx->regs[ rd ] = ctx->regs[rs1] % ctx->regs[rs2];
+                  }
+                  else
+                  {
+                     ctx->regs[ rd ] = 0;
+                  }
                }
                break;
 

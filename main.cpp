@@ -23,6 +23,7 @@
 #include "emul.h"
 #include "memio.h"
 #include "srec.h"
+#include "sdCard.h"
 
 tangerineCtx_t tgctx;
 emContext_t    cpuctx;
@@ -32,7 +33,7 @@ int main( int argc,  char** argv )
 {
    ulong i;
 
-   printf( "TangerineRiscVSOC emulator B20240901 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240902 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -47,6 +48,12 @@ int main( int argc,  char** argv )
    cpuctx.fetchInstruction = fetchInstruction;
    cpuctx.fetchData        = fetchData;
    cpuctx.storeData        = storeData;
+
+   //sd card
+   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+   {
+      printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
+   }
 
    //hardware emulation
    if( tgInit( &tgctx ) )
