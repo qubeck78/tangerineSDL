@@ -7,6 +7,7 @@
 #include "spiSdCardRegs.h"
 #include "usbHostRegs.h"
 #include "sdCard.h"
+#include "usbHost.h"
 
 #include <SDL2/SDL.h>
 
@@ -52,7 +53,8 @@ typedef struct _tangerineCtx_t
    tgUsbHostRegs_t    usbHostRegs;
 
    sdcContext_t       sdCardContext;
-   
+   usbhContext_t      usbHostContext;
+      
 }tangerineCtx_t;
 
 

@@ -62,7 +62,7 @@ ulong fetchData( ulong addr )
          case 0xf0300000:
 
             //usb host regs
-            return usbHostRegsReadReg( &tgctx->usbHostRegs, addr & 0xffff );
+            return usbHostRegsReadReg( &tgctx->usbHostRegs, &tgctx->usbHostContext, addr & 0xffff );
             
             break;
 
@@ -129,7 +129,7 @@ ulong storeData( ulong addr, uchar mask, ulong data )
          case 0xf0300000:
 
             //usb host regs
-            return usbHostRegsWriteReg( &tgctx->usbHostRegs, addr & 0xffff, data );
+            return usbHostRegsWriteReg( &tgctx->usbHostRegs, &tgctx->usbHostContext, addr & 0xffff, data );
             
             break;
 

@@ -184,7 +184,7 @@ ulong sdcSPIWrite( sdcContext_t *ctx, ulong value )
 
             default:
 
-               printf( "SD CMD:%x, %x\n", ctx->cmd, ctx->arg );
+               printf( "Unhandled SD CMD:%x, %x\n", ctx->cmd & 0xbf, ctx->arg );
                break;
          }
 
