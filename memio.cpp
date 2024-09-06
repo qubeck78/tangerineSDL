@@ -4,7 +4,7 @@
 
 static tangerineCtx_t *tgctx;
 
-ulong mioInit( tangerineCtx_t *ptgctx )
+uint32_t mioInit( tangerineCtx_t *ptgctx )
 {
 
    tgctx = ptgctx;
@@ -12,33 +12,33 @@ ulong mioInit( tangerineCtx_t *ptgctx )
    return 0;
 }
 
-ulong fetchInstruction( ulong addr )
+uint32_t fetchInstruction( uint32_t addr )
 {
 
    return fetchData( addr );
 }
 
-ulong fetchData( ulong addr )
+uint32_t fetchData( uint32_t addr )
 {
-   ulong *loadPtr;
+   uint32_t *loadPtr;
 
    //system ram ( stack, bootloader - if present, text mode )
    if( addr < 0x8000 )
    {
-      return ( ( ulong* ) tgctx->systemRAM )[ addr >> 2 ];
+      return ( ( uint32_t* ) tgctx->systemRAM )[ addr >> 2 ];
    }
 
    //dma ram ( 8MB )
    else if( ( addr >= 0x20000000 ) && ( addr < 0x20800000 ) )
    {
-      return ( ( ulong* ) tgctx->dmaRAM )[ (addr - 0x20000000 ) >> 2 ];
+      return ( ( uint32_t* ) tgctx->dmaRAM )[ (addr - 0x20000000 ) >> 2 ];
 
    }
 
    //fast ram ( 1MB )
    else if( ( addr >= 0x30000000 ) && ( addr < 0x30100000 ) )
    {
-      return ( ( ulong* ) tgctx->fastRAM )[ (addr - 0x30000000 ) >> 2 ];
+      return ( ( uint32_t* ) tgctx->fastRAM )[ (addr - 0x30000000 ) >> 2 ];
 
    }
 
@@ -49,7 +49,7 @@ ulong fetchData( ulong addr )
       
       switch( addr & 0xffff0000 )
       {
-         ulong rv;
+         uint32_t rv;
 
          case 0xf0000000:
 
@@ -88,10 +88,10 @@ ulong fetchData( ulong addr )
 }
 
 
-ulong storeData( ulong addr, uchar mask, ulong data )
+uint32_t storeData( uint32_t addr, uint8_t mask, uint32_t data )
 {
-   ulong *storePtr;
-   ulong rb;
+   uint32_t *storePtr;
+   uint32_t rb;
 
    storePtr = NULL;
 
@@ -99,19 +99,19 @@ ulong storeData( ulong addr, uchar mask, ulong data )
    //system ram ( stack, bootloader - if present, text mode )
    if( addr < 0x8000 )
    {
-      storePtr = &( ( ulong* ) tgctx->systemRAM )[ addr >> 2 ];
+      storePtr = &( ( uint32_t* ) tgctx->systemRAM )[ addr >> 2 ];
    }
 
    //dma ram ( 8MB )
    else if( ( addr >= 0x20000000 ) && ( addr < 0x20800000 ) )
    {
-      storePtr = &( ( ulong* ) tgctx->dmaRAM )[ (addr - 0x20000000 ) >> 2 ];
+      storePtr = &( ( uint32_t* ) tgctx->dmaRAM )[ (addr - 0x20000000 ) >> 2 ];
    }
 
    //fast ram ( 1MB )
    else if( ( addr >= 0x30000000 ) && ( addr < 0x30100000 ) )
    {
-      storePtr = &( ( ulong* ) tgctx->fastRAM )[ (addr - 0x30000000 ) >> 2 ];
+      storePtr = &( ( uint32_t* ) tgctx->fastRAM )[ (addr - 0x30000000 ) >> 2 ];
    }
 
    //registers

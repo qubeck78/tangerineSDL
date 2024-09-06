@@ -2,19 +2,19 @@
 
 #include <SDL2/SDL.h>
 
-static ulong tgputChar( tangerineCtx_t *ctx, ushort *frameBuffer, ushort x, ushort y, uchar letter, uchar format )
+static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t x, uint16_t y, uint8_t letter, uint8_t format )
 {
-    ushort   cx;
-    ushort   cy; 
-    ushort   cxMax;
-    ushort   cxStep;
+    uint16_t   cx;
+    uint16_t   cy; 
+    uint16_t   cxMax;
+    uint16_t   cxStep;
 
-    uchar   *letterPtr;
-    uchar    letterData;
+    uint8_t   *letterPtr;
+    uint8_t    letterData;
 
-    ushort   letterColor = 0xffff;
-    ushort   backgroundColor = 0x0000;
-    ushort   pixel;
+    uint16_t   letterColor = 0xffff;
+    uint16_t   backgroundColor = 0x0000;
+    uint16_t   pixel;
 
     letterPtr = &ctx->consoleFont[ letter * 8 ];
 
@@ -275,23 +275,23 @@ static ulong tgputChar( tangerineCtx_t *ctx, ushort *frameBuffer, ushort x, usho
     return 0;
 }
 
-ulong tgRedrawScreen( tangerineCtx_t *ctx )
+uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
 {
     int          texturePitch;
     void        *texturePixels;
     
-    ushort      *frameBuffer;
-    ushort      *textureBuffer;
-    ushort       pixel;
+    uint16_t      *frameBuffer;
+    uint16_t      *textureBuffer;
+    uint16_t       pixel;
 
-    uchar       *textOverlayPtr;
-    ulong        toWidth;
-    uchar        letter;
-    uchar        format;
+    uint8_t       *textOverlayPtr;
+    uint32_t        toWidth;
+    uint8_t        letter;
+    uint8_t        format;
 
 
-    ulong        x;
-    ulong        y;
+    uint32_t        x;
+    uint32_t        y;
 
    SDL_LockTexture( ctx->texture, NULL, &texturePixels, &texturePitch );
 
@@ -309,9 +309,9 @@ ulong tgRedrawScreen( tangerineCtx_t *ctx )
       case _VIDEOMODE_320_TEXT80_OVER_GFX:
 
          
-         frameBuffer     = &( (ushort*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
+         frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
 
-         textureBuffer   = (ushort*)texturePixels;
+         textureBuffer   = (uint16_t*)texturePixels;
 
 
          for( y = 0; y < 240; y++ )
@@ -354,7 +354,7 @@ ulong tgRedrawScreen( tangerineCtx_t *ctx )
       toWidth = 40;
    }
 
-   textOverlayPtr = &((uchar*)ctx->systemRAM)[0x6d40];
+   textOverlayPtr = &((uint8_t*)ctx->systemRAM)[0x6d40];
    
    for( y = 0; y < 30; y++ )
    {
@@ -363,7 +363,7 @@ ulong tgRedrawScreen( tangerineCtx_t *ctx )
           letter = *textOverlayPtr++;
           format = *textOverlayPtr++;
 
-          tgputChar( ctx, (ushort*)texturePixels, x, y, letter, format );
+          tgputChar( ctx, (uint16_t*)texturePixels, x, y, letter, format );
       }
    }  
 

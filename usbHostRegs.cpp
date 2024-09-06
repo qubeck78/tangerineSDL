@@ -1,7 +1,7 @@
 
 #include "usbHostRegs.h"
 
-ulong usbHostRegsInit( tgUsbHostRegs_t *regs )
+uint32_t usbHostRegsInit( tgUsbHostRegs_t *regs )
 {
    regs->id                   = 0x80000004;
    regs->version              = 0x20240820;
@@ -11,7 +11,7 @@ ulong usbHostRegsInit( tgUsbHostRegs_t *regs )
    return RV_OK;
 }
 
-ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort addr )
+uint32_t usbHostRegsReadReg( tgUsbHostRegs_t *regs, usbhContext_t *ctx, uint16_t addr )
 {
 
    switch( addr >> 2 )
@@ -44,7 +44,7 @@ ulong usbHostRegsReadReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort add
    return 0;
 }
 
-ulong usbHostRegsWriteReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, ushort addr, ulong value )
+uint32_t usbHostRegsWriteReg(  tgUsbHostRegs_t *regs, usbhContext_t *ctx, uint16_t addr, uint32_t value )
 {
 
    return RV_OK;

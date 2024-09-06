@@ -6,8 +6,8 @@ LD = x86_64-w64-mingw32-g++
 
 all: $(TARGET).exe
 
-$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o usbHost.o 
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o usbHost.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o usbHost.o disasm.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o usbHost.o disasm.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -45,6 +45,8 @@ memio.o: memio.cpp
 srec.o: srec.cpp
 	$(CC) -o srec.o srec.cpp 
 
+disasm.o: disasm.cpp
+	$(CC) -o disasm.o disasm.cpp 
 
 clean:
 	rm -f *.o *.rec *.disasm *.elf *.mif *.mi *.bin *.map *.exe

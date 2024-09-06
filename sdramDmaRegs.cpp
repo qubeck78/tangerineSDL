@@ -1,6 +1,6 @@
 #include "sdramDmaRegs.h"
 
-ulong sdramDMARegsInit( tgSDRAMDMARegs_t *regs )
+uint32_t sdramDMARegsInit( tgSDRAMDMARegs_t *regs )
 {
 
    regs->id                   = 0x80000003;
@@ -14,7 +14,7 @@ ulong sdramDMARegsInit( tgSDRAMDMARegs_t *regs )
    return RV_OK;
 }
 
-ulong sdramDMARegsReadReg(  tgSDRAMDMARegs_t *regs, ushort addr )
+uint32_t sdramDMARegsReadReg(  tgSDRAMDMARegs_t *regs, uint16_t addr )
 {
    switch( addr >> 2 )
    {
@@ -52,7 +52,7 @@ ulong sdramDMARegsReadReg(  tgSDRAMDMARegs_t *regs, ushort addr )
    return 0;
 }
 
-ulong sdramDMARegsWriteReg(  tgSDRAMDMARegs_t *regs, ushort addr, ulong value )
+uint32_t sdramDMARegsWriteReg(  tgSDRAMDMARegs_t *regs, uint16_t addr, uint32_t value )
 {
    switch( addr >> 2 )
    {

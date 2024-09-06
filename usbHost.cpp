@@ -3,7 +3,7 @@
 
 #include <cstdio>
 
-ulong usbHostInit( usbhContext_t *ctx )
+uint32_t usbHostInit( usbhContext_t *ctx )
 {
    //clear fifo
 
@@ -14,7 +14,7 @@ ulong usbHostInit( usbhContext_t *ctx )
    return RV_OK;
 }
 
-ulong usbHostFifoPut( usbhContext_t *ctx, ulong value )
+uint32_t usbHostFifoPut( usbhContext_t *ctx, uint32_t value )
 {
    if( ctx->usbhFifoNumEntries < ( _USBHOST_FIFO_SIZE - 1 ) )
    {
@@ -26,9 +26,9 @@ ulong usbHostFifoPut( usbhContext_t *ctx, ulong value )
    return RV_OK;
 }
 
-ulong usbHostFifoGet( usbhContext_t *ctx )
+uint32_t usbHostFifoGet( usbhContext_t *ctx )
 {
-   ulong rv;
+   uint32_t rv;
 
    rv = 0;
 
@@ -44,7 +44,7 @@ ulong usbHostFifoGet( usbhContext_t *ctx )
    return rv;
 }
 
-ulong usbHostFifoEmpty( usbhContext_t *ctx )
+uint32_t usbHostFifoEmpty( usbhContext_t *ctx )
 {
    if( ctx->usbhFifoNumEntries )
    {
@@ -56,14 +56,14 @@ ulong usbHostFifoEmpty( usbhContext_t *ctx )
    }
 }
 
-ulong usbHostKeyDownEvent( usbhContext_t *ctx, ulong scancode )
+uint32_t usbHostKeyDownEvent( usbhContext_t *ctx, uint32_t scancode )
 {
    usbHostFifoPut( ctx, scancode );
 
    return RV_OK;
 }
 
-ulong usbHostKeyUpEvent( usbhContext_t *ctx, ulong scancode )
+uint32_t usbHostKeyUpEvent( usbhContext_t *ctx, uint32_t scancode )
 {
    usbHostFifoPut( ctx, 0x0 );
 

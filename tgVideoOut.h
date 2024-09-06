@@ -1,10 +1,10 @@
 #ifndef _TGVIDEOOUT_H
 #define _TGVIDEOOUT_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 #include "tangerine.h"
 
-ulong tgRedrawScreen( tangerineCtx_t *ctx );
+uint32_t tgRedrawScreen( tangerineCtx_t *ctx );
 
 
 

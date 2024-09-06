@@ -2,7 +2,7 @@
 #include "sdCard.h"
 
 
-ulong sdcInit( sdcContext_t *ctx, char * imageFileName )
+uint32_t sdcInit( sdcContext_t *ctx, char * imageFileName )
 {
 
    ctx->sdCEn        = 1;   //deselected
@@ -18,7 +18,7 @@ ulong sdcInit( sdcContext_t *ctx, char * imageFileName )
    return RV_OK;
 }
 
-ulong sdcSPICE( sdcContext_t *ctx, ulong enabled )
+uint32_t sdcSPICE( sdcContext_t *ctx, uint32_t enabled )
 {
 
    if( enabled == 1 )
@@ -33,15 +33,15 @@ ulong sdcSPICE( sdcContext_t *ctx, ulong enabled )
    return RV_OK;
 }
 
-ulong sdcSPIRead( sdcContext_t *ctx )
+uint32_t sdcSPIRead( sdcContext_t *ctx )
 {
 
    return ctx->spiResponse;
 }
 
-ulong sdcSPIWrite( sdcContext_t *ctx, ulong value )
+uint32_t sdcSPIWrite( sdcContext_t *ctx, uint32_t value )
 {
-   ulong i;
+   uint32_t i;
 
    if( ctx->sdCEn )
    {

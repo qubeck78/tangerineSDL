@@ -6,10 +6,10 @@
 
 
 
-ulong tgInit( tangerineCtx_t *ctx )
+uint32_t tgInit( tangerineCtx_t *ctx )
 {
    FILE  *in;
-   ulong i;
+   uint32_t i;
 
    ctx->window    = NULL;
    ctx->renderer  = NULL;
@@ -32,6 +32,13 @@ ulong tgInit( tangerineCtx_t *ctx )
      printf( "Error: Could not create window '%s'\n", SDL_GetError() );
      return RV_ERROR;
    }  
+
+   if( ctx->displayFullscreen )
+   {
+
+      SDL_SetWindowFullscreen( ctx->window, SDL_WINDOW_FULLSCREEN_DESKTOP );
+
+   }
 
    // create renderer
    ctx->renderer = SDL_CreateRenderer( ctx->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
@@ -63,7 +70,7 @@ ulong tgInit( tangerineCtx_t *ctx )
 
    for( i = 160 * 5; i < 160 * 15; i++ )
    {
-      ( (uchar*)ctx->systemRAM )[ 0x6d40 + i ] = rand();
+      ( (uint8_t*)ctx->systemRAM )[ 0x6d40 + i ] = rand();
 
    }
 
@@ -78,7 +85,7 @@ ulong tgInit( tangerineCtx_t *ctx )
 
    for( i = 0; i < _TG_DMA_RAM_SIZE; i++ )
    {
-      ( (uchar*)ctx->dmaRAM )[i] = rand();
+      ( (uint8_t*)ctx->dmaRAM )[i] = rand();
 
    }
 
@@ -113,7 +120,7 @@ ulong tgInit( tangerineCtx_t *ctx )
    return RV_OK;        
 }
 
-ulong tgHandleEvents( tangerineCtx_t *ctx )
+uint32_t tgHandleEvents( tangerineCtx_t *ctx )
 {
    SDL_Event    event;
 
@@ -144,7 +151,7 @@ ulong tgHandleEvents( tangerineCtx_t *ctx )
 }
 
 
-ulong tgClose( tangerineCtx_t *ctx )
+uint32_t tgClose( tangerineCtx_t *ctx )
 {
 
    if( ctx->texture != NULL )

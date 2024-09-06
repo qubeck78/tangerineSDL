@@ -6,9 +6,9 @@
 static char lineBuffer[255];
 
 
-static int writeMem8( ulong address, ulong data )
+static int writeMem8( uint32_t address, uint32_t data )
 {
-   uchar mask;
+   uint8_t mask;
 
    data = data & 0xff;
 
@@ -84,7 +84,7 @@ static int hexToIByte( char *buf, int position )
    return ( d1 << 4 ) | d2;
 }
 
-static ulong decodeAndDisplayS0Record( char *buf )
+static uint32_t decodeAndDisplayS0Record( char *buf )
 {
    int idx;
    int recordLength;
@@ -108,14 +108,14 @@ static ulong decodeAndDisplayS0Record( char *buf )
    return 0;
 }
 
-static ulong decodeAndSaveS1_2_3Record( char *buf, ulong recordType )
+static uint32_t decodeAndSaveS1_2_3Record( char *buf, uint32_t recordType )
 {
    int   rv;
-   ulong i;
-   ulong dataFieldIdx;
-   ulong address;
-   ulong recordLength;
-   ulong addressFieldLength;
+   uint32_t i;
+   uint32_t dataFieldIdx;
+   uint32_t address;
+   uint32_t recordLength;
+   uint32_t addressFieldLength;
 
    unsigned char *memPtr;
    
@@ -160,7 +160,7 @@ static ulong decodeAndSaveS1_2_3Record( char *buf, ulong recordType )
       if( rv == -1 ) return 1;
 
       address <<= 8;
-      address |= (uchar)rv;
+      address |= (uint8_t)rv;
 
    }
 
@@ -179,12 +179,12 @@ static ulong decodeAndSaveS1_2_3Record( char *buf, ulong recordType )
 }
 
 
-static ulong decodeAndExecuteS7_8_9Record( char *buf, ulong recordType )
+static uint32_t decodeAndExecuteS7_8_9Record( char *buf, uint32_t recordType )
 {
-   long  rv;
-   ulong address;
-   ulong i;
-   ulong addressFieldLength;
+   int32_t  rv;
+   uint32_t address;
+   uint32_t i;
+   uint32_t addressFieldLength;
 
 
    switch( recordType )
@@ -214,19 +214,19 @@ static ulong decodeAndExecuteS7_8_9Record( char *buf, ulong recordType )
       if( rv == -1 ) return 1;
    
       address <<= 8;
-      address |= (uchar)rv;
+      address |= (uint8_t)rv;
    
    }
    
    return address;
 } 
 
-ulong srecLoadFile( char *path, ulong *startPc )
+uint32_t srecLoadFile( char *path, uint32_t *startPc )
 {
    FILE *in;
 
-   ulong    rv;
-   ulong    i;
+   uint32_t    rv;
+   uint32_t    i;
 
    if( startPc )
    {

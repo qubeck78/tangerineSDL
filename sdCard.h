@@ -1,7 +1,7 @@
 #ifndef _SDCARD_H
 #define _SDCARD_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 #include <cstdio>
 
 typedef enum   _sdcState_t { sdcsIdle, sdcsCMD0, sdcsCMD1, sdcsCMD2, sdcsCMD3, sdcsCMD4, sdcsCMD5, sdcsCMD6, sdcsSendResponseBuf }sdcState_t;
@@ -12,25 +12,25 @@ typedef struct _sdcContext_t
    sdcState_t   state;
    FILE        *imageFile;
    
-   ulong        spiResponse;
+   uint32_t        spiResponse;
 
-   ulong        cmd;
-   ulong        arg;
-   ulong        crc;
+   uint32_t        cmd;
+   uint32_t        arg;
+   uint32_t        crc;
 
-   ulong sdCEn;
+   uint32_t sdCEn;
 
-   uchar responseBuf[1024];
-   ulong responseIdx;
-   ulong responseMaxIdx;
+   uint8_t  responseBuf[1024];
+   uint32_t responseIdx;
+   uint32_t responseMaxIdx;
 
 }sdcContext_t;
 
-ulong sdcInit( sdcContext_t *ctx, char * imageFileName );
+uint32_t sdcInit( sdcContext_t *ctx, char * imageFileName );
 
-ulong sdcSPICE( sdcContext_t *ctx, ulong enabled );
-ulong sdcSPIRead( sdcContext_t *ctx );
-ulong sdcSPIWrite( sdcContext_t *ctx, ulong value );
+uint32_t sdcSPICE( sdcContext_t *ctx, uint32_t enabled );
+uint32_t sdcSPIRead( sdcContext_t *ctx );
+uint32_t sdcSPIWrite( sdcContext_t *ctx, uint32_t value );
 
 
 #endif

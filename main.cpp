@@ -31,16 +31,16 @@ emContext_t    cpuctx;
 
 int main( int argc,  char** argv )
 {
-   ulong i;
+   uint32_t i;
+   uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240902 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240905 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
    if( mioInit( &tgctx) )
    {
 
-      tgClose( &tgctx );
       return 1;
 
    }
@@ -50,7 +50,7 @@ int main( int argc,  char** argv )
    cpuctx.storeData        = storeData;
 
    //sd card
-   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcardPrv.img" ) )
    {
       printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
    }
@@ -61,11 +61,13 @@ int main( int argc,  char** argv )
       printf( "Error, can't init usb host emulation\n" );            
    }
 
+   tgctx.displayFullscreen = 0;
+
    //hardware emulation
    if( tgInit( &tgctx ) )
    {
       
-      tgClose( &tgctx );
+      tgClose( &tgctx );;
       return 1;
 
    }
@@ -99,7 +101,13 @@ int main( int argc,  char** argv )
 
       for( i = 0; i < 1000000; i++ )
       {
-         rvStep( &cpuctx );
+         cpurv = rvStep( &cpuctx );
+         
+         if( cpurv )
+         {
+            break;
+         }
+
       }
 
       tgRedrawScreen( &tgctx );

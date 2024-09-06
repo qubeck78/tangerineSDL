@@ -1,41 +1,41 @@
 #ifndef _ROOTREGS_H
 #define _ROOTREGS_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 
 #include "sdCard.h"
 
 typedef struct _tgRootRegs_t
 {
-    volatile ulong id;
-    volatile ulong version;
+    volatile uint32_t id;
+    volatile uint32_t version;
 
     //
-    volatile unsigned long videoMuxMode;
+    volatile uint32_t videoMuxMode;
     
     //b0 - vsync (positive)
-    volatile unsigned long videoVSync;
+    volatile uint32_t videoVSync;
     
-    volatile unsigned long  unused0;
+    volatile uint32_t  unused0;
         
     //wr b7, b6, b5, b4 - LEDS, b0 - spi0SSel
-    volatile unsigned long gpoPort;
+    volatile uint32_t gpoPort;
     
     //wr b0 - tickTimerReset
-    volatile unsigned long tickTimerConfig;
+    volatile uint32_t tickTimerConfig;
     
     //rd - tickTimerValue
-    volatile unsigned long tickTimerValue;
+    volatile uint32_t tickTimerValue;
     
     //counts frames (up), write resets timer
-    volatile unsigned long  frameTimer;
+    volatile uint32_t  frameTimer;
 
 }tgRootRegs_t;
 
 
-ulong rootRegsInit( tgRootRegs_t *regs );
-ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr );
-ulong rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value );
+uint32_t rootRegsInit( tgRootRegs_t *regs );
+uint32_t rootRegsReadReg( tgRootRegs_t *regs, uint16_t addr );
+uint32_t rootRegsWriteReg( tgRootRegs_t *regs, sdcContext_t *sdctx, uint16_t addr, uint32_t value );
 
 
 #endif
