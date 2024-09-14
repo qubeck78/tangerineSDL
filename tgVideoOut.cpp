@@ -280,65 +280,90 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
     int          texturePitch;
     void        *texturePixels;
     
-    uint16_t      *frameBuffer;
-    uint16_t      *textureBuffer;
-    uint16_t       pixel;
+    uint16_t    *frameBuffer;
+    uint16_t    *textureBuffer;
+    uint16_t    *textureRowBuffer;
+    uint16_t     pixel;
 
-    uint8_t       *textOverlayPtr;
-    uint32_t        toWidth;
-    uint8_t        letter;
-    uint8_t        format;
+    uint8_t     *textOverlayPtr;
+    uint32_t     toWidth;
+    uint8_t      letter;
+    uint8_t      format;
 
 
-    uint32_t        x;
-    uint32_t        y;
+    uint32_t     x;
+    uint32_t     y;
 
-   SDL_LockTexture( ctx->texture, NULL, &texturePixels, &texturePitch );
+    SDL_LockTexture( ctx->texture, NULL, &texturePixels, &texturePitch );
 
-   switch( ctx->rootRegs.videoMuxMode )
-   {
-      case _VIDEOMODE_640_TEXT40_OVER_GFX:
-      case _VIDEOMODE_640_TEXT80_OVER_GFX:
+    switch( ctx->rootRegs.videoMuxMode )
+    {
+        case _VIDEOMODE_640_TEXT40_OVER_GFX:
+        case _VIDEOMODE_640_TEXT80_OVER_GFX:
 
           
-          //memcpy( texturePixels, (const void*)bsp->dmaDisplayPointerStart, texturePitch * 480 );
+            frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
 
-         break;
+            textureBuffer   = (uint16_t*)texturePixels;
 
-      case _VIDEOMODE_320_TEXT40_OVER_GFX:
-      case _VIDEOMODE_320_TEXT80_OVER_GFX:
+
+            for( y = 0; y < 480; y++ )
+            {
+                textureRowBuffer = &textureBuffer[ y * 640 ];
+
+                for( x = 0; x < 320; x++ )
+                {
+                    *textureRowBuffer++ = *frameBuffer++;
+                }
+
+                frameBuffer += ( ctx->sdramDMARegs.ch3DmaRequest0Modulo << 1 );
+
+                for( x = 320; x < 640; x++ )
+                {
+                    *textureRowBuffer++ = *frameBuffer++;
+
+                }
+
+                frameBuffer += ( ctx->sdramDMARegs.ch3DmaRequest1Modulo << 1 );
+
+            }
+
+        break;
+
+        case _VIDEOMODE_320_TEXT40_OVER_GFX:
+        case _VIDEOMODE_320_TEXT80_OVER_GFX:
 
          
-         frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
+            frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
 
-         textureBuffer   = (uint16_t*)texturePixels;
+            textureBuffer   = (uint16_t*)texturePixels;
 
 
-         for( y = 0; y < 240; y++ )
-         {
-            for( x = 0; x < 320; x++ )
+            for( y = 0; y < 240; y++ )
             {
-               pixel = *frameBuffer++;
+                for( x = 0; x < 320; x++ )
+                {
+                    pixel = *frameBuffer++;
 
-               textureBuffer[ ( x * 2 ) + ( y * 2 ) * 640 ]                = pixel;
-               textureBuffer[ ( x * 2 ) + 1 + ( y * 2 ) * 640 ]            = pixel;
-               textureBuffer[ ( x * 2 ) + ( ( y * 2 ) + 1 ) * 640 ]        = pixel;
-               textureBuffer[ ( x * 2 ) + 1 + ( ( y * 2 ) + 1 ) * 640 ]    = pixel;
+                    textureBuffer[ ( x * 2 ) + ( y * 2 ) * 640 ]                = pixel;
+                    textureBuffer[ ( x * 2 ) + 1 + ( y * 2 ) * 640 ]            = pixel;
+                    textureBuffer[ ( x * 2 ) + ( ( y * 2 ) + 1 ) * 640 ]        = pixel;
+                    textureBuffer[ ( x * 2 ) + 1 + ( ( y * 2 ) + 1 ) * 640 ]    = pixel;
+
+                }
+
+                if( y & 1 )
+                {
+                    frameBuffer += ( ctx->sdramDMARegs.ch3DmaRequest1Modulo << 1 );
+                }
+                else
+                {
+                    frameBuffer += ( ctx->sdramDMARegs.ch3DmaRequest0Modulo << 1 );
+                }
 
             }
 
-            if( y & 1 )
-            {
-               frameBuffer += ( ctx->sdramDMARegs.ch3DmaRequest1Modulo << 1 );
-            }
-            else
-            {
-               frameBuffer += ( ctx->sdramDMARegs.ch3DmaRequest0Modulo << 1 );
-            }
-
-         }
-
-         break;
+        break;
    }
 
    //text overlay

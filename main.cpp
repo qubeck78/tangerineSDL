@@ -34,7 +34,7 @@ int main( int argc,  char** argv )
    uint32_t i;
    uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240905 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240906 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -50,7 +50,7 @@ int main( int argc,  char** argv )
    cpuctx.storeData        = storeData;
 
    //sd card
-   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcardPrv.img" ) )
    {
       printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
    }

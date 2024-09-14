@@ -940,11 +940,11 @@ uint32_t rvStep( emContext_t *ctx )
 
                if( i & 2 )
                {
-                  ctx->storeData( i & 0xfffffffc, 0b1100, ( ctx->regs[rs2] & 0xfffff ) << 16 );
+                  ctx->storeData( i & 0xfffffffc, 0b1100, ( ctx->regs[rs2] & 0xffff ) << 16 );
                }
                else
                {
-                  ctx->storeData( i & 0xfffffffc, 0b0011, ctx->regs[rs2] & 0xfffff );
+                  ctx->storeData( i & 0xfffffffc, 0b0011, ctx->regs[rs2] & 0xffff );
                }
 
                break;
