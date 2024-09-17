@@ -113,6 +113,7 @@ uint32_t tgInit( tangerineCtx_t *ctx )
    //init registers
 
    rootRegsInit( &ctx->rootRegs );
+   blitterRegsInit( &ctx->blitterRegs );
    sdramDMARegsInit( &ctx->sdramDMARegs );
    spiSdCardRegsInit( &ctx->spiSdCardRegs );
    usbHostRegsInit( &ctx->usbHostRegs );

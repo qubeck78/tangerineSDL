@@ -34,7 +34,7 @@ int main( int argc,  char** argv )
    uint32_t i;
    uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240906 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240917 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -49,10 +49,14 @@ int main( int argc,  char** argv )
    cpuctx.fetchData        = fetchData;
    cpuctx.storeData        = storeData;
 
+
    //sd card
    if( sdcInit( &tgctx.sdCardContext, (char*)"sdcardPrv.img" ) )
    {
-      printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
+      if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+      {
+         printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
+      }
    }
 
    //usb host
@@ -113,6 +117,7 @@ int main( int argc,  char** argv )
       tgRedrawScreen( &tgctx );
 
       tgctx.rootRegs.frameTimer++;
+      tgctx.rootRegs.videoVSync = 1;   //sim vsync
 
       if( tgHandleEvents( &tgctx ) == RV_QUIT )
       {

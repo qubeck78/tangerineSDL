@@ -6,6 +6,7 @@
 #include "rootRegs.h"
 #include "spiSdCardRegs.h"
 #include "usbHostRegs.h"
+#include "blitterRegs.h"
 #include "sdCard.h"
 #include "usbHost.h"
 
@@ -49,6 +50,7 @@ typedef struct _tangerineCtx_t
    uint8_t            consoleFont[2048];
 
    tgRootRegs_t       rootRegs;
+   tgBlitterRegs_t    blitterRegs;
    tgSDRAMDMARegs_t   sdramDMARegs;
    tgSpiSDCardRegs_t  spiSdCardRegs;
    tgUsbHostRegs_t    usbHostRegs;

@@ -59,6 +59,13 @@ uint32_t fetchData( uint32_t addr )
 
             break;
 
+         case 0xf0200000:
+
+            //blitter regs
+            return blitterRegsReadReg( &tgctx->blitterRegs, addr & 0xffff );
+            
+            break;
+
          case 0xf0300000:
 
             //usb host regs
@@ -124,6 +131,13 @@ uint32_t storeData( uint32_t addr, uint8_t mask, uint32_t data )
             //root regs
 
             return rootRegsWriteReg( &tgctx->rootRegs, &tgctx->sdCardContext, addr & 0xffff, data );
+            break;
+
+         case 0xf0200000:
+
+            //usb host regs
+            return blitterRegsWriteReg( &tgctx->blitterRegs, addr & 0xffff, data );
+            
             break;
 
          case 0xf0300000:

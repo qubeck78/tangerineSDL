@@ -42,7 +42,15 @@ uint32_t rootRegsReadReg(  tgRootRegs_t *regs, uint16_t addr )
 
       case 0x03:
 
-         return regs->videoVSync;
+         if( regs->videoVSync )
+         {
+            regs->videoVSync = 0;
+            return 1; 
+         }
+         else
+         {
+            return 0;
+         }
 
          break;
 
