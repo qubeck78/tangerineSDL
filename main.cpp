@@ -34,7 +34,7 @@ int main( int argc,  char** argv )
    uint32_t i;
    uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240917 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240918 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
