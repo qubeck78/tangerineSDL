@@ -6,10 +6,10 @@
 
 
 
-ulong tgInit( tangerineCtx_t *ctx )
+uint32_t tgInit( tangerineCtx_t *ctx )
 {
    FILE  *in;
-   ulong i;
+   uint32_t i;
 
    ctx->window    = NULL;
    ctx->renderer  = NULL;
@@ -19,19 +19,26 @@ ulong tgInit( tangerineCtx_t *ctx )
    ctx->systemRAM = NULL;
 
 
-   if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) 
+   if( SDL_Init( SDL_INIT_TIMER |  SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO ) ) 
    {
      printf( "Error: SDL_Init failed '%s'\n", SDL_GetError() );
      return RV_ERROR;
    }
 
-   ctx->window = SDL_CreateWindow( "TangerineRiscVSOC simulator ( RISC-V 32IM ) -qubeck78@wp.pl-", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_ALLOW_HIGHDPI );
+   ctx->window = SDL_CreateWindow( "TangerineRiscVSOC simulator ( RISC-V 32IM ) -qubeck78@wp.pl-", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
 
    if( ctx->window == NULL ) 
    {
      printf( "Error: Could not create window '%s'\n", SDL_GetError() );
      return RV_ERROR;
    }  
+
+   if( ctx->displayFullscreen )
+   {
+
+      SDL_SetWindowFullscreen( ctx->window, SDL_WINDOW_FULLSCREEN_DESKTOP );
+
+   }
 
    // create renderer
    ctx->renderer = SDL_CreateRenderer( ctx->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
@@ -63,7 +70,7 @@ ulong tgInit( tangerineCtx_t *ctx )
 
    for( i = 160 * 5; i < 160 * 15; i++ )
    {
-      ( (uchar*)ctx->systemRAM )[ 0x6d40 + i ] = rand();
+      ( (uint8_t*)ctx->systemRAM )[ 0x6d40 + i ] = rand();
 
    }
 
@@ -78,7 +85,7 @@ ulong tgInit( tangerineCtx_t *ctx )
 
    for( i = 0; i < _TG_DMA_RAM_SIZE; i++ )
    {
-      ( (uchar*)ctx->dmaRAM )[i] = rand();
+      ( (uint8_t*)ctx->dmaRAM )[i] = rand();
 
    }
 
@@ -106,14 +113,16 @@ ulong tgInit( tangerineCtx_t *ctx )
    //init registers
 
    rootRegsInit( &ctx->rootRegs );
+   blitterRegsInit( &ctx->blitterRegs );
    sdramDMARegsInit( &ctx->sdramDMARegs );
    spiSdCardRegsInit( &ctx->spiSdCardRegs );
    usbHostRegsInit( &ctx->usbHostRegs );
-
+   audioRegsInit( &ctx->audioRegs );
+   
    return RV_OK;        
 }
 
-ulong tgHandleEvents( tangerineCtx_t *ctx )
+uint32_t tgHandleEvents( tangerineCtx_t *ctx )
 {
    SDL_Event    event;
 
@@ -144,7 +153,7 @@ ulong tgHandleEvents( tangerineCtx_t *ctx )
 }
 
 
-ulong tgClose( tangerineCtx_t *ctx )
+uint32_t tgClose( tangerineCtx_t *ctx )
 {
 
    if( ctx->texture != NULL )

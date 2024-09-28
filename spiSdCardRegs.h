@@ -1,28 +1,28 @@
 #ifndef _SPISDCARDREGS_H
 #define _SPISDCARDREGS_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 
 #include "sdCard.h"
 
 typedef struct _tgSpiSDCardRegs_t
 {
 
-    volatile ulong id;
-    volatile ulong version;
+    volatile uint32_t id;
+    volatile uint32_t version;
 
     //wr - send data via spi, rd - read received data
-    volatile unsigned long spiData;
+    volatile uint32_t spiData;
     
     //rd b0 - spiReady
-    volatile unsigned long spiStatus;
+    volatile uint32_t spiStatus;
 
 }tgSpiSDCardRegs_t;
 
 
-ulong spiSdCardRegsInit( tgSpiSDCardRegs_t *regs );
-ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr );
-ulong spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value );
+uint32_t spiSdCardRegsInit( tgSpiSDCardRegs_t *regs );
+uint32_t spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, uint16_t addr );
+uint32_t spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, uint16_t addr, uint32_t value );
 
 
 #endif

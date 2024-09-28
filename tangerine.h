@@ -1,13 +1,16 @@
 #ifndef _TANGERINE_H
 #define _TANGERINE_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 #include "sdramDmaRegs.h"
 #include "rootRegs.h"
 #include "spiSdCardRegs.h"
 #include "usbHostRegs.h"
+#include "blitterRegs.h"
 #include "sdCard.h"
 #include "usbHost.h"
+#include "audioRegs.h"
+#include "audio.h"
 
 #include <SDL2/SDL.h>
 
@@ -29,10 +32,10 @@
 #define _VIDEOMODE_640_TEXT40_OVER_GFX      0x12
 #define _VIDEOMODE_640_TEXT80_OVER_GFX      0x16
 
-#define tgColor565( r, g, b ) ( ushort )((((ushort)b >> 3) & 31 ) | (((ushort)g & 252 ) << 3 ) | (((ushort)r & 248 ) << 8 ))
-#define tgColor565GetR( color ) ( ushort )(( color >> 8) & 0xf8 )
-#define tgColor565GetG( color ) ( ushort )(( color >> 3) & 0xfc )
-#define tgColor565GetB( color ) ( ushort )(( color << 3) & 0xf8 )
+#define tgColor565( r, g, b ) ( uint16_t )((((uint16_t)b >> 3) & 31 ) | (((uint16_t)g & 252 ) << 3 ) | (((uint16_t)r & 248 ) << 8 ))
+#define tgColor565GetR( color ) ( uint16_t )(( color >> 8) & 0xf8 )
+#define tgColor565GetG( color ) ( uint16_t )(( color >> 3) & 0xfc )
+#define tgColor565GetB( color ) ( uint16_t )(( color << 3) & 0xf8 )
 
 typedef struct _tangerineCtx_t
 {
@@ -40,27 +43,31 @@ typedef struct _tangerineCtx_t
    SDL_Window        *window;
    SDL_Renderer      *renderer;
    SDL_Texture       *texture;
-
+   uint32_t           displayFullscreen;
+   
    void              *dmaRAM;
    void              *fastRAM;
    void              *systemRAM;
 
-   uchar              consoleFont[2048];
+   uint8_t            consoleFont[2048];
 
    tgRootRegs_t       rootRegs;
+   tgBlitterRegs_t    blitterRegs;
    tgSDRAMDMARegs_t   sdramDMARegs;
    tgSpiSDCardRegs_t  spiSdCardRegs;
    tgUsbHostRegs_t    usbHostRegs;
-
+   tgAudioRegs_t      audioRegs;
+   
    sdcContext_t       sdCardContext;
    usbhContext_t      usbHostContext;
-      
+   audContext_t       audioContext;
+
 }tangerineCtx_t;
 
 
-ulong tgInit( tangerineCtx_t *ctx );
-ulong tgClose( tangerineCtx_t *ctx );
-ulong tgHandleEvents( tangerineCtx_t *ctx );
+uint32_t tgInit( tangerineCtx_t *ctx );
+uint32_t tgClose( tangerineCtx_t *ctx );
+uint32_t tgHandleEvents( tangerineCtx_t *ctx );
 
 
 #endif

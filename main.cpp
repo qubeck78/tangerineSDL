@@ -14,6 +14,7 @@
 
 */
 
+
 #include "main.h"
 #include <cstring>
 #include <climits>
@@ -31,16 +32,16 @@ emContext_t    cpuctx;
 
 int main( int argc,  char** argv )
 {
-   ulong i;
+   uint32_t i;
+   uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240902 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240928 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
    if( mioInit( &tgctx) )
    {
 
-      tgClose( &tgctx );
       return 1;
 
    }
@@ -49,10 +50,14 @@ int main( int argc,  char** argv )
    cpuctx.fetchData        = fetchData;
    cpuctx.storeData        = storeData;
 
+
    //sd card
-   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+   if( sdcInit( &tgctx.sdCardContext, (char*)"sdcardPrv.img" ) )
    {
-      printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
+      if( sdcInit( &tgctx.sdCardContext, (char*)"sdcard.img" ) )
+      {
+         printf( "Can't load sd card image. Ensure srcard.img is in the same dir as emulator executable.\n" );      
+      }
    }
 
    //usb host
@@ -61,15 +66,24 @@ int main( int argc,  char** argv )
       printf( "Error, can't init usb host emulation\n" );            
    }
 
+
+   tgctx.displayFullscreen = 0;
+
    //hardware emulation
    if( tgInit( &tgctx ) )
    {
       
-      tgClose( &tgctx );
+      tgClose( &tgctx );;
       return 1;
 
    }
 
+   //audio, has to be called after tgInit because it depends on SDL
+   
+   if( audioInit( &tgctx.audioContext ) )
+   {
+      printf( "Error, can't init audio\n" );            
+   }
 
    rvReset( &cpuctx );
    if( srecLoadFile( ( char* )"boot.rec", &i ) )
@@ -99,12 +113,21 @@ int main( int argc,  char** argv )
 
       for( i = 0; i < 1000000; i++ )
       {
-         rvStep( &cpuctx );
+         cpurv = rvStep( &cpuctx );
+         
+         if( cpurv )
+         {
+            break;
+         }
+
       }
 
       tgRedrawScreen( &tgctx );
 
       tgctx.rootRegs.frameTimer++;
+      tgctx.rootRegs.videoVSync = 1;   //sim vsync
+
+      audioMain( &tgctx.audioContext );
 
       if( tgHandleEvents( &tgctx ) == RV_QUIT )
       {

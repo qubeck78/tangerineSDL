@@ -18,14 +18,14 @@
 
 
 
-ulong rvReset( emContext_t *ctx )
+uint32_t rvReset( emContext_t *ctx )
 {
    if( ctx == NULL )
    {
       return 1;
    }
 
-   ctx->sregs = ( long* ) &ctx->regs[0];
+   ctx->sregs = ( int32_t* ) &ctx->regs[0];
 
    ctx->pc        = 0;
    ctx->regs[0]   = 0;
@@ -38,43 +38,43 @@ ulong rvReset( emContext_t *ctx )
 }
 
 
-ulong rvStep( emContext_t *ctx )
+uint32_t rvStep( emContext_t *ctx )
 {
    //Instruction decoder
 
    //common
-   ulong opcode;
-   ulong rd;
-   ulong funct3;
-   ulong rs1;
-   ulong rs2;
-   ulong rtFunct7;
+   uint32_t opcode;
+   uint32_t rd;
+   uint32_t funct3;
+   uint32_t rs1;
+   uint32_t rs2;
+   uint32_t rtFunct7;
 
    //I-type
-   ulong itImm;
-   long  itsImm;
+   uint32_t itImm;
+   int32_t  itsImm;
 
    //S-type
-   ulong stImm;
-   long  stsImm;
+   uint32_t stImm;
+   int32_t  stsImm;
 
    //B-type
-   ulong btImm;
-   long  btsImm;
+   uint32_t btImm;
+   int32_t  btsImm;
 
    //U-type
-   ulong utImm;
+   uint32_t utImm;
 
    //J-type
-   ulong jtImm;
-   long  jtsImm;
+   uint32_t jtImm;
+   int32_t  jtsImm;
 
-   ulong iDecAux;
-   ulong instruction;
-   ulong i;
-   ulong j;
+   uint32_t iDecAux;
+   uint32_t instruction;
+   uint32_t i;
+   uint32_t j;
 
-   ulong rv;
+   uint32_t rv;
 
 
    //fetch instruction
@@ -144,7 +144,7 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->regs[ rd ] = (long long int)( ( (long long int)ctx->sregs[rs1] * (long long int)ctx->sregs[rs2] ) ) >> 32;
+                  ctx->regs[ rd ] = (int64_t)( ( (int64_t)ctx->sregs[rs1] * (int64_t)ctx->sregs[rs2] ) ) >> 32;
                }
                break;
 
@@ -157,7 +157,7 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->regs[ rd ] = (long long int)( ( (long long int)ctx->sregs[rs1] * (long long unsigned int)ctx->regs[rs2] ) ) >> 32;
+                  ctx->regs[ rd ] = (int64_t)( ( (int64_t)ctx->sregs[rs1] * (uint64_t)ctx->regs[rs2] ) ) >> 32;
                }
                break;
  
@@ -169,7 +169,7 @@ ulong rvStep( emContext_t *ctx )
 
                if( rd )
                {
-                  ctx->regs[ rd ] = (long long unsigned int)( ( (long long unsigned int)ctx->regs[rs1] * (long long unsigned int)ctx->regs[rs2] ) ) >> 32;
+                  ctx->regs[ rd ] = (uint64_t)( ( (uint64_t)ctx->regs[rs1] * (uint64_t)ctx->regs[rs2] ) ) >> 32;
                }
                break;
 
@@ -940,11 +940,11 @@ ulong rvStep( emContext_t *ctx )
 
                if( i & 2 )
                {
-                  ctx->storeData( i & 0xfffffffc, 0b1100, ( ctx->regs[rs2] & 0xfffff ) << 16 );
+                  ctx->storeData( i & 0xfffffffc, 0b1100, ( ctx->regs[rs2] & 0xffff ) << 16 );
                }
                else
                {
-                  ctx->storeData( i & 0xfffffffc, 0b0011, ctx->regs[rs2] & 0xfffff );
+                  ctx->storeData( i & 0xfffffffc, 0b0011, ctx->regs[rs2] & 0xffff );
                }
 
                break;

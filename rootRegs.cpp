@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-ulong rootRegsInit( tgRootRegs_t *regs )
+uint32_t rootRegsInit( tgRootRegs_t *regs )
 {
 
    regs->id             = 0x80000000;
@@ -18,7 +18,7 @@ ulong rootRegsInit( tgRootRegs_t *regs )
 
 }
 
-ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr )
+uint32_t rootRegsReadReg(  tgRootRegs_t *regs, uint16_t addr )
 {
    switch( addr >> 2 )
    {
@@ -42,7 +42,15 @@ ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr )
 
       case 0x03:
 
-         return regs->videoVSync;
+         if( regs->videoVSync )
+         {
+            regs->videoVSync = 0;
+            return 1; 
+         }
+         else
+         {
+            return 0;
+         }
 
          break;
 
@@ -68,7 +76,7 @@ ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr )
 
          //tick timer
 
-         return (ulong)( SDL_GetTicks() - regs->tickTimerValue );
+         return (uint32_t)( SDL_GetTicks() - regs->tickTimerValue );
          
          break;
 
@@ -84,7 +92,7 @@ ulong rootRegsReadReg(  tgRootRegs_t *regs, ushort addr )
    return 0;
 }
 
-ulong rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value )
+uint32_t rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, uint16_t addr, uint32_t value )
 {
    switch( addr >> 2 )
    {

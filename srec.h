@@ -4,7 +4,7 @@
 #include "gfTypes.h"
 
 
-ulong srecLoadFile( char *path, ulong *startPc );
+uint32_t srecLoadFile( char *path, uint32_t *startPc );
 
 
 

@@ -6,8 +6,8 @@ LD = x86_64-w64-mingw32-g++
 
 all: $(TARGET).exe
 
-$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o usbHost.o 
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o usbHost.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -36,6 +36,18 @@ usbHostRegs.o: usbHostRegs.cpp
 usbHost.o: usbHost.cpp
 	$(CC) -o usbHost.o usbHost.cpp 
 
+blitterRegs.o: blitterRegs.cpp
+	$(CC) -o blitterRegs.o blitterRegs.cpp
+
+blitter.o: blitter.cpp
+	$(CC) -o blitter.o blitter.cpp
+
+audioRegs.o: audioRegs.cpp
+	$(CC) -o audioRegs.o audioRegs.cpp
+
+audio.o: audio.cpp
+	$(CC) -o audio.o audio.cpp
+
 emul.o: emul.cpp
 	$(CC) -o emul.o emul.cpp 
 
@@ -45,6 +57,8 @@ memio.o: memio.cpp
 srec.o: srec.cpp
 	$(CC) -o srec.o srec.cpp 
 
+disasm.o: disasm.cpp
+	$(CC) -o disasm.o disasm.cpp 
 
 clean:
 	rm -f *.o *.rec *.disasm *.elf *.mif *.mi *.bin *.map *.exe
@@ -53,6 +67,6 @@ clean:
 
 run: $(TARGET).exe
 	cd bin
-	start $(TARGET).exe slideshow.rec
+	start $(TARGET).exe shell.rec
 	
 	

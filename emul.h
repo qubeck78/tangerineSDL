@@ -18,7 +18,7 @@
 #ifndef _EMUL_H
 #define _EMUL_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 
 #define _RVEMUL_OK                        0
 #define _RVEMUL_UNDEFINED_INSTRUCTION     1
@@ -31,33 +31,33 @@ typedef struct _emContext_t
    //memory interface callback functions
 
                                  //addr
-   ulong    ( *fetchInstruction )( ulong );
+   uint32_t  ( *fetchInstruction )( uint32_t );
 
                            //addr
-   ulong    ( *fetchData )( ulong );
+   uint32_t  ( *fetchData )( uint32_t );
 
                            //addr  mask   data
-   ulong    ( *storeData )( ulong, uchar, ulong );
+   uint32_t  ( *storeData )( uint32_t, uint8_t, uint32_t );
 
-   ulong    pc;
+   uint32_t  pc;
 
-   ulong    regs[32];
-   long     *sregs;
+   uint32_t  regs[32];
+   int32_t  *sregs;
 
    //instruction counter;
 
-   ulong    instrCounter;
+   uint32_t  instrCounter;
 
    //instruction decoder
 
-   ulong     instruction;
+   uint32_t  instruction;
 
    
 }emContext_t;
 
 
-ulong rvReset( emContext_t *ctx );
-ulong rvStep( emContext_t *ctx );
+uint32_t rvReset( emContext_t *ctx );
+uint32_t rvStep( emContext_t *ctx );
 
 
 #endif

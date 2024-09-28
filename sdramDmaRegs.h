@@ -1,22 +1,22 @@
 #ifndef _SDRAMDMA_H
 #define _SDRAMDMA_H
 
-#include "gftypes.h"
+#include "gfTypes.h"
 
 typedef struct _tgSDRAMDMARegs_t
 {
-    volatile ulong id;
-    volatile ulong version;
-    volatile ulong ch3DmaPointerStart;
-    volatile ulong ch3DmaRequest0Modulo;
-    volatile ulong ch3DmaRequest1Modulo;
+    volatile uint32_t id;
+    volatile uint32_t version;
+    volatile uint32_t ch3DmaPointerStart;
+    volatile uint32_t ch3DmaRequest0Modulo;
+    volatile uint32_t ch3DmaRequest1Modulo;
 
 }tgSDRAMDMARegs_t;
 
 
-ulong sdramDMARegsInit( tgSDRAMDMARegs_t *regs );
-ulong sdramDMARegsReadReg(  tgSDRAMDMARegs_t *regs, ushort addr );
-ulong sdramDMARegsWriteReg(  tgSDRAMDMARegs_t *regs, ushort addr, ulong value );
+uint32_t sdramDMARegsInit( tgSDRAMDMARegs_t *regs );
+uint32_t sdramDMARegsReadReg(  tgSDRAMDMARegs_t *regs, uint16_t addr );
+uint32_t sdramDMARegsWriteReg(  tgSDRAMDMARegs_t *regs, uint16_t addr, uint32_t value );
 
 
 #endif

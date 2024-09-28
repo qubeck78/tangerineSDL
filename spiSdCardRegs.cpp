@@ -1,8 +1,8 @@
-#include "spiSDCardRegs.h"
+#include "spiSdCardRegs.h"
 
 #include <cstdio>
 
-ulong spiSdCardRegsInit( tgSpiSDCardRegs_t *regs )
+uint32_t spiSdCardRegsInit( tgSpiSDCardRegs_t *regs )
 {
    
    regs->id                   = 0x80000002;
@@ -14,7 +14,7 @@ ulong spiSdCardRegsInit( tgSpiSDCardRegs_t *regs )
    return RV_OK;
 }
 
-ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr )
+uint32_t spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, uint16_t addr )
 {
 
    switch( addr >> 2 )
@@ -50,7 +50,7 @@ ulong spiSdCardRegsReadReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushor
    return 0;
 }
 
-ulong spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, ushort addr, ulong value )
+uint32_t spiSdCardRegsWriteReg(  tgSpiSDCardRegs_t *regs, sdcContext_t *sdctx, uint16_t addr, uint32_t value )
 {
 
    switch( addr >> 2 )
