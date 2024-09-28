@@ -19,7 +19,7 @@ uint32_t tgInit( tangerineCtx_t *ctx )
    ctx->systemRAM = NULL;
 
 
-   if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) 
+   if( SDL_Init( SDL_INIT_TIMER |  SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO ) ) 
    {
      printf( "Error: SDL_Init failed '%s'\n", SDL_GetError() );
      return RV_ERROR;
@@ -117,7 +117,8 @@ uint32_t tgInit( tangerineCtx_t *ctx )
    sdramDMARegsInit( &ctx->sdramDMARegs );
    spiSdCardRegsInit( &ctx->spiSdCardRegs );
    usbHostRegsInit( &ctx->usbHostRegs );
-
+   audioRegsInit( &ctx->audioRegs );
+   
    return RV_OK;        
 }
 

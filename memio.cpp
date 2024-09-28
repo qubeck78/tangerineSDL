@@ -80,6 +80,13 @@ uint32_t fetchData( uint32_t addr )
             
             break;
 
+         case 0xf0600000:
+
+            //audio ( i2s ) regs
+            return audioRegsReadReg( &tgctx->audioRegs, &tgctx->audioContext, addr & 0xffff );
+            
+            break;
+
          case 0xf0800000:
 
             //sdram dma regs
@@ -151,6 +158,13 @@ uint32_t storeData( uint32_t addr, uint8_t mask, uint32_t data )
 
             //spi sd card regs
             return spiSdCardRegsWriteReg( &tgctx->spiSdCardRegs, &tgctx->sdCardContext, addr & 0xffff, data );
+            
+            break;
+
+         case 0xf0600000:
+
+            //audio ( i2s ) regs
+            return audioRegsWriteReg( &tgctx->audioRegs, &tgctx->audioContext, addr & 0xffff, data );
             
             break;
 

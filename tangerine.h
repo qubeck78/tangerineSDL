@@ -9,6 +9,8 @@
 #include "blitterRegs.h"
 #include "sdCard.h"
 #include "usbHost.h"
+#include "audioRegs.h"
+#include "audio.h"
 
 #include <SDL2/SDL.h>
 
@@ -54,10 +56,12 @@ typedef struct _tangerineCtx_t
    tgSDRAMDMARegs_t   sdramDMARegs;
    tgSpiSDCardRegs_t  spiSdCardRegs;
    tgUsbHostRegs_t    usbHostRegs;
-
+   tgAudioRegs_t      audioRegs;
+   
    sdcContext_t       sdCardContext;
    usbhContext_t      usbHostContext;
-      
+   audContext_t       audioContext;
+
 }tangerineCtx_t;
 
 

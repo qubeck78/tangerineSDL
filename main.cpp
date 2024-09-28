@@ -14,6 +14,7 @@
 
 */
 
+
 #include "main.h"
 #include <cstring>
 #include <climits>
@@ -34,7 +35,7 @@ int main( int argc,  char** argv )
    uint32_t i;
    uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240918 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20240928 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -65,6 +66,7 @@ int main( int argc,  char** argv )
       printf( "Error, can't init usb host emulation\n" );            
    }
 
+
    tgctx.displayFullscreen = 0;
 
    //hardware emulation
@@ -76,6 +78,12 @@ int main( int argc,  char** argv )
 
    }
 
+   //audio, has to be called after tgInit because it depends on SDL
+   
+   if( audioInit( &tgctx.audioContext ) )
+   {
+      printf( "Error, can't init audio\n" );            
+   }
 
    rvReset( &cpuctx );
    if( srecLoadFile( ( char* )"boot.rec", &i ) )
@@ -118,6 +126,8 @@ int main( int argc,  char** argv )
 
       tgctx.rootRegs.frameTimer++;
       tgctx.rootRegs.videoVSync = 1;   //sim vsync
+
+      audioMain( &tgctx.audioContext );
 
       if( tgHandleEvents( &tgctx ) == RV_QUIT )
       {
