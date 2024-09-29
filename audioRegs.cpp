@@ -62,7 +62,7 @@ uint32_t audioRegsReadReg(  tgAudioRegs_t *regs, audContext_t *audCtx, uint16_t 
 
       case 0x07:
 
-         return regs->audioDmaStatus;
+         return audioGetDMAStatus( audCtx );
          break;
 
       case 0x08:
@@ -107,6 +107,9 @@ uint32_t audioRegsWriteReg( tgAudioRegs_t *regs, audContext_t *audCtx, uint16_t 
       case 0x06:
 
          regs->audioDmaConfig = value;
+
+         audioSetDMAConfig( audCtx, regs->fifoReadConfig, regs->audioDmaConfig, regs->audioDmaPointer, regs->audioDmaLength );
+
          break;
 
       case 0x08:

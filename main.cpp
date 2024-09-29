@@ -73,14 +73,14 @@ int main( int argc,  char** argv )
    if( tgInit( &tgctx ) )
    {
       
-      tgClose( &tgctx );;
+      tgClose( &tgctx );
       return 1;
 
    }
 
    //audio, has to be called after tgInit because it depends on SDL
    
-   if( audioInit( &tgctx.audioContext ) )
+   if( audioInit( &tgctx.audioContext, tgctx.dmaRAM ) )
    {
       printf( "Error, can't init audio\n" );            
    }
