@@ -69,6 +69,7 @@ uint32_t audioGetDMAStatus( audContext_t *audCtx )
 uint32_t audioMain( audContext_t *audCtx )
 {
    uint32_t i;
+   uint32_t j;
    int16_t  l;
    int16_t  r;
 
@@ -84,7 +85,9 @@ uint32_t audioMain( audContext_t *audCtx )
 
          case 0x02:  
 
-            for( i = 0; i < 2048; i += 4 )
+            //for( i = 0; i < 2048; i += 4 )
+            i = 0;
+            do
             {
 
                l = audCtx->dmaRam[ audCtx->dmaPointer + audCtx->dmaIdx++ ];
@@ -104,13 +107,14 @@ uint32_t audioMain( audContext_t *audCtx )
                   audCtx->dmaStatus &= ( 2 ^ 0xffffffff );            
                }
                
-               sampleBuffer[ i ] = l;
-               sampleBuffer[ i + 1 ] = r;
-               sampleBuffer[ i + 2 ] = l;
-               sampleBuffer[ i + 3 ] = r;
+               for( j = 0; j <= audCtx->freqDivision; j++ )
+               {
+                  sampleBuffer[ i++ ] = l;
+                  sampleBuffer[ i++ ] = r;
+               }
 
 
-            }
+            }while( i < 2048 );
 
             SDL_QueueAudio( audCtx->audioDeviceId, sampleBuffer, 2048 * 2  );
 

@@ -26,16 +26,62 @@
 #include "srec.h"
 #include "sdCard.h"
 
+#ifdef __EMSCRIPTEN__
+
+#include <emscripten.h>
+#include <emscripten/html5.h>
+
+#endif
+
 tangerineCtx_t tgctx;
 emContext_t    cpuctx;
+
+void mainLoop()
+{
+   uint32_t cpurv;
+   uint32_t i;
+
+   for( i = 0; i < 1000000; i++ )
+   {
+      cpurv = rvStep( &cpuctx );
+      
+      if( cpurv )
+      {
+         break;
+      }
+
+   }
+
+   tgRedrawScreen( &tgctx );
+
+   tgctx.rootRegs.frameTimer++;
+   tgctx.rootRegs.videoVSync = 1;   //sim vsync
+
+   audioMain( &tgctx.audioContext );
+
+   if( tgHandleEvents( &tgctx ) == RV_QUIT )
+   {
+
+      #ifdef __EMSCRIPTEN__
+
+         emscripten_cancel_main_loop();
+
+      #else
+
+         tgctx.exitMainLoop = 1;
+
+      #endif
+   }   
+
+}
 
 
 int main( int argc,  char** argv )
 {
    uint32_t i;
-   uint32_t cpurv;
 
-   printf( "TangerineRiscVSOC emulator B20240928 -qUBECk78@wp.pl-\n\n" );
+
+   printf( "TangerineRiscVSOC emulator B20240929 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -91,51 +137,50 @@ int main( int argc,  char** argv )
       printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
    }
 
-   if( argc > 1 )
-   {
-      printf( "Loading: \"%s\"\n", argv[1] );
-      if( srecLoadFile( argv[1], &i ) )
+   #ifdef __EMSCRIPTEN__
+
+   
+      srecLoadFile( "shell.rec", &i );
+      cpuctx.pc = i;
+
+   #else
+
+      if( argc > 1 )
       {
-         printf( "error\n" );
+         printf( "Loading: \"%s\"\n", argv[1] );
+         if( srecLoadFile( argv[1], &i ) )
+         {
+            printf( "error\n" );
+         }
+         else
+         {
+            cpuctx.pc = i;
+         }
       }
       else
       {
-         cpuctx.pc = i;
+         printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
       }
-   }
-   else
-   {
-      printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
-   }
+
+   #endif
+
+   tgctx.exitMainLoop = 0;
 
    do
    {
 
-      for( i = 0; i < 1000000; i++ )
-      {
-         cpurv = rvStep( &cpuctx );
+      #ifdef __EMSCRIPTEN__
+      
+         emscripten_set_main_loop( mainLoop, 0,  1 );
+
+      #else
          
-         if( cpurv )
-         {
-            break;
-         }
+         mainLoop();
 
-      }
 
-      tgRedrawScreen( &tgctx );
+      #endif
 
-      tgctx.rootRegs.frameTimer++;
-      tgctx.rootRegs.videoVSync = 1;   //sim vsync
-
-      audioMain( &tgctx.audioContext );
-
-      if( tgHandleEvents( &tgctx ) == RV_QUIT )
-      {
-         break;
-      }
-
-   }while( 1 );
-
+   }while( !tgctx.exitMainLoop );
 
 
 
