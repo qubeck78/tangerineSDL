@@ -96,7 +96,7 @@ static uint32_t blitterFill( tgBlitterRegs_t *regs )
    uint32_t y;
 
 
-   destAddress = regs->daAddress & 0x3fffffc;
+   destAddress = regs->daAddress & 0x3fffffe;
 
 
    for( y = 0; y < regs->daHeight; y++ )
@@ -123,8 +123,8 @@ static uint32_t blitterCopy( tgBlitterRegs_t *regs, uint32_t cmd )
    uint16_t pixel;
 
 
-   srcAddress  = regs->saAddress & 0x3fffffc;
-   destAddress = regs->daAddress & 0x3fffffc;
+   srcAddress  = regs->saAddress & 0x3fffffe;
+   destAddress = regs->daAddress & 0x3fffffe;
 
 
    if( cmd & 1 )
@@ -187,9 +187,9 @@ static uint32_t blitterCopyAlpha( tgBlitterRegs_t *regs, uint32_t cmd )
    uint16_t pixelB;
 
 
-   srcAAddress  = regs->saAddress & 0x3fffffc;
-   srcBAddress  = regs->sbAddress & 0x3fffffc;
-   destAddress = regs->daAddress & 0x3fffffc;
+   srcAAddress  = regs->saAddress & 0x3fffffe;
+   srcBAddress  = regs->sbAddress & 0x3fffffe;
+   destAddress = regs->daAddress & 0x3fffffe;
 
 
    if( cmd & 1 )
@@ -261,7 +261,7 @@ static uint32_t blitterScaledCopy( tgBlitterRegs_t *regs, uint32_t cmd )
    uint32_t sx;
    uint32_t sy;
 
-   destAddress = regs->daAddress & 0x3fffffc;
+   destAddress = regs->daAddress & 0x3fffffe;
 
 
    sx = 0;
@@ -277,7 +277,7 @@ static uint32_t blitterScaledCopy( tgBlitterRegs_t *regs, uint32_t cmd )
          for( x = 0; x < regs->daWidth; x++ )
          {
 
-            srcAddress  = regs->saAddress & 0x3fffffc;
+            srcAddress  = regs->saAddress & 0x3fffffe;
             srcAddress  += ( sx >> 15 ) + ( sy >> 16 ) * regs->saRowWidth * 2;
             sx += regs->input0;
 
@@ -310,7 +310,7 @@ static uint32_t blitterScaledCopy( tgBlitterRegs_t *regs, uint32_t cmd )
          for( x = 0; x < regs->daWidth; x++ )
          {
 
-            srcAddress  = regs->saAddress & 0x3fffffc;
+            srcAddress  = regs->saAddress & 0x3fffffe;
             srcAddress  += ( sx >> 15 ) + ( sy >> 16 ) * regs->saRowWidth * 2;
             sx += regs->input0;
 
