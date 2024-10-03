@@ -1,3 +1,6 @@
+#      for passing arguments add this to the html file
+#      var Module = {
+#        arguments: ['tunnel.rec'],
 
 TARGET = tangerine
 CC = emcc -c -O3 -fpermissive  -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 

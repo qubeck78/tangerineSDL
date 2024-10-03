@@ -137,32 +137,23 @@ int main( int argc,  char** argv )
       printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
    }
 
-   #ifdef __EMSCRIPTEN__
-
-   
-      srecLoadFile( "shell.rec", &i );
-      cpuctx.pc = i;
-
-   #else
-
-      if( argc > 1 )
+   if( argc > 1 )
+   {
+      printf( "Loading: \"%s\"\n", argv[1] );
+      if( srecLoadFile( argv[1], &i ) )
       {
-         printf( "Loading: \"%s\"\n", argv[1] );
-         if( srecLoadFile( argv[1], &i ) )
-         {
-            printf( "error\n" );
-         }
-         else
-         {
-            cpuctx.pc = i;
-         }
+         printf( "error\n" );
       }
       else
       {
-         printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
+         cpuctx.pc = i;
       }
+   }
+   else
+   {
+      printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
+   }
 
-   #endif
 
    tgctx.exitMainLoop = 0;
 

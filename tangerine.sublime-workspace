@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"ali",
+				"align-self"
+			],
+			[
+				"a",
+				"absolute"
+			],
+			[
 				"main",
 				"mainLoop"
 			],
@@ -17,10 +25,6 @@
 			],
 			[
 				"au",
-				"audContext_t"
-			],
-			[
-				"a",
 				"audContext_t"
 			],
 			[
@@ -144,7 +148,7 @@
 	"buffers":
 	[
 	],
-	"build_system": "Packages/User/make run.sublime-build",
+	"build_system": "Packages/Makefile/Make.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -215,7 +219,7 @@
 				]
 			],
 			[
-				"Packages/User/make run.sublime-build",
+				"Packages/Makefile/Make.sublime-build",
 				""
 			]
 		],
@@ -335,23 +339,25 @@
 	},
 	"expanded_folders":
 	[
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator"
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/html"
 	],
 	"file_history":
 	[
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/main.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.linux",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tangerine.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitter.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/main.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/html/tangerine.html",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.linux",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tangerine.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audio.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audioRegs.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.emscripten",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/sdramDmaRegs.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitter.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audio.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/memio.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audioRegs.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tangerine.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitterRegs.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/rootRegs.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitterRegs.cpp",
@@ -444,6 +450,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"var module",
 			"7f",
 			"array",
 			"ulong",
