@@ -4,10 +4,10 @@ CC = g++ -c -O3 -fpermissive
 LD = g++ 
 
 
-all: $(TARGET).exe
+all: $(TARGET)
 
-$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET): main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o  audioRegs.o audio.o -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -42,6 +42,12 @@ blitterRegs.o: blitterRegs.cpp
 blitter.o: blitter.cpp
 	$(CC) -o blitter.o blitter.cpp
 
+audioRegs.o: audioRegs.cpp
+	$(CC) -o audioRegs.o audioRegs.cpp
+
+audio.o: audio.cpp
+	$(CC) -o audio.o audio.cpp
+
 emul.o: emul.cpp
 	$(CC) -o emul.o emul.cpp 
 
@@ -56,9 +62,9 @@ disasm.o: disasm.cpp
 
 clean:
 	rm -f *.o *.rec *.disasm *.elf *.mif *.mi *.bin *.map *.exe
-	rm -f bin/*.exe
+	rm -f bin/$(TARGET)
 
 
-run: $(TARGET).exe
+run: $(TARGET)
 	/bin/sh -c "cd bin;./$(TARGET) slideshow.rec"
 

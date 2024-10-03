@@ -58,7 +58,7 @@ uint32_t sdramDMARegsWriteReg(  tgSDRAMDMARegs_t *regs, uint16_t addr, uint32_t 
    {
 
       case 0x02:
-
+                                          //64MB in 32-bit words
          regs->ch3DmaPointerStart = value & 0xffffff;
 
          break;

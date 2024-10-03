@@ -25,7 +25,7 @@ uint32_t tgInit( tangerineCtx_t *ctx )
      return RV_ERROR;
    }
 
-   ctx->window = SDL_CreateWindow( "TangerineRiscVSOC simulator ( RISC-V 32IM ) -qubeck78@wp.pl-", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+   ctx->window = SDL_CreateWindow( "TangerineRiscVSOC emulator ( RISC-V 32IM ) -qubeck78@wp.pl-", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
 
    if( ctx->window == NULL ) 
    {

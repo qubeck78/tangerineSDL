@@ -15,7 +15,7 @@
 #include <SDL2/SDL.h>
 
 //64 MB DMA ram
-#define _TG_DMA_RAM_SIZE      ( 1048576 * 8 )
+#define _TG_DMA_RAM_SIZE      ( 1048576 * 64 )
 
 //1 MB FAST ram
 #define _TG_FAST_RAM_SIZE     ( 1048576 * 1 )
@@ -44,7 +44,8 @@ typedef struct _tangerineCtx_t
    SDL_Renderer      *renderer;
    SDL_Texture       *texture;
    uint32_t           displayFullscreen;
-   
+   uint32_t           exitMainLoop;
+      
    void              *dmaRAM;
    void              *fastRAM;
    void              *systemRAM;
@@ -61,6 +62,7 @@ typedef struct _tangerineCtx_t
    sdcContext_t       sdCardContext;
    usbhContext_t      usbHostContext;
    audContext_t       audioContext;
+
 
 }tangerineCtx_t;
 
