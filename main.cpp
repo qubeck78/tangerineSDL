@@ -25,6 +25,8 @@
 #include "memio.h"
 #include "srec.h"
 #include "sdCard.h"
+#include "disasm.h"
+#include "debugger.h"
 
 #ifdef __EMSCRIPTEN__
 
@@ -81,7 +83,7 @@ int main( int argc,  char** argv )
    uint32_t i;
 
 
-   printf( "TangerineRiscVSOC emulator B20240929 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20241006 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access

@@ -1,17 +1,13 @@
-#      for passing arguments add this to the html file
-#      var Module = {
-#        arguments: ['tunnel.rec'],
 
 TARGET = tangerine
-CC = emcc -c -O3 -fpermissive  -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 
-LD = emcc -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sINITIAL_MEMORY=73400320
-                                                         
+CC = x86_64-w64-mingw32-g++ -c -O3 -fpermissive  
+LD = x86_64-w64-mingw32-g++ 
 
 
-all: $(TARGET).html
+all: $(TARGET).exe
 
-$(TARGET).html: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o --preload-file bin@/ -o html/$(TARGET).html
+$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o audioRegs.o audio.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o audioRegs.o audio.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -64,11 +60,16 @@ srec.o: srec.cpp
 disasm.o: disasm.cpp
 	$(CC) -o disasm.o disasm.cpp 
 
+debugger.o: debugger.cpp
+	$(CC) -o debugger.o debugger.cpp 
+
 clean:
 	rm -f *.o *.rec *.disasm *.elf *.mif *.mi *.bin *.map *.exe
 	rm -f bin/*.exe
-	rm -f html/*
 
 
+run: $(TARGET).exe
+	cd bin
+	start $(TARGET).exe shell.rec
 	
 	

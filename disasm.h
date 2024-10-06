@@ -5,8 +5,7 @@
 
 typedef struct _dsContext_t
 {
-   uint32_t    *codeBuf;
-   uint32_t     codeBufIdx;
+   int32_t      codeBufIdx;
    uint32_t     codeBufStartPc;
 
    //instruction decoder
