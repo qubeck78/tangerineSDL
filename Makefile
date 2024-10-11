@@ -6,8 +6,8 @@ LD = x86_64-w64-mingw32-g++
 
 all: $(TARGET).exe
 
-$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -45,6 +45,9 @@ blitter.o: blitter.cpp
 audioRegs.o: audioRegs.cpp
 	$(CC) -o audioRegs.o audioRegs.cpp
 
+gfxPixelGenRegs.o: gfxPixelGenRegs.cpp
+	$(CC) -o gfxPixelGenRegs.o gfxPixelGenRegs.cpp
+
 audio.o: audio.cpp
 	$(CC) -o audio.o audio.cpp
 
@@ -73,6 +76,6 @@ clean:
 
 run: $(TARGET).exe
 	cd bin
-	start $(TARGET).exe shell.rec
+	start $(TARGET).exe gfxTest8bpp.rec
 	
 	

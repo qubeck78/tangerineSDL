@@ -12,6 +12,7 @@
 #include "usbHost.h"
 #include "audioRegs.h"
 #include "audio.h"
+#include "gfxPixelGenRegs.h"
 
 #include <SDL2/SDL.h>
 
@@ -44,31 +45,31 @@
 typedef struct _tangerineCtx_t
 {
 
-   SDL_Window        *window;
-   SDL_Renderer      *renderer;
-   SDL_Texture       *texture;
-   uint32_t           displayFullscreen;
-   uint32_t           exitMainLoop;
-   uint32_t           debuggerActive;
+   SDL_Window          *window;
+   SDL_Renderer        *renderer;
+   SDL_Texture         *texture;
+   uint32_t             displayFullscreen;
+   uint32_t             exitMainLoop;
+   uint32_t             debuggerActive;
    
-   void              *dmaRAM;
-   void              *fastRAM;
-   void              *systemRAM;
+   void                *dmaRAM;
+   void                *fastRAM;
+   void                *systemRAM;
 
-   uint8_t            consoleFont[2048];
+   uint8_t              consoleFont[2048];
 
-   emContext_t        cpuctx;
+   emContext_t          cpuctx;
    
-   tgRootRegs_t       rootRegs;
-   tgBlitterRegs_t    blitterRegs;
-   tgSDRAMDMARegs_t   sdramDMARegs;
-   tgSpiSDCardRegs_t  spiSdCardRegs;
-   tgUsbHostRegs_t    usbHostRegs;
-   tgAudioRegs_t      audioRegs;
-   
-   sdcContext_t       sdCardContext;
-   usbhContext_t      usbHostContext;
-   audContext_t       audioContext;
+   tgRootRegs_t         rootRegs;
+   tgBlitterRegs_t      blitterRegs;
+   tgSDRAMDMARegs_t     sdramDMARegs;
+   tgSpiSDCardRegs_t    spiSdCardRegs;
+   tgUsbHostRegs_t      usbHostRegs;
+   tgAudioRegs_t        audioRegs;
+   tgGfxPixelGenRegs_t  gfxPixelGenRegs;
+   sdcContext_t         sdCardContext;
+   usbhContext_t        usbHostContext;
+   audContext_t         audioContext;
 
 
 }tangerineCtx_t;
