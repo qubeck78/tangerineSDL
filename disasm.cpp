@@ -153,7 +153,7 @@ uint32_t dsDisassemble( dsContext_t *ctx, char *outputBuffer )
    instruction       = fetchData( ctx->pc );
 
    ctx->instruction  = instruction;
-   ctx->codeBufIdx   += 1;
+   //ctx->codeBufIdx   += 1;
 
 
    //decode instruction

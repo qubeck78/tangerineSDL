@@ -36,7 +36,6 @@
 #endif
 
 tangerineCtx_t tgctx;
-emContext_t    cpuctx;
 debugCtx_t     dbgctx;
 
 void mainLoop()
@@ -70,7 +69,7 @@ void mainLoop()
    {
       for( i = 0; i < 1000000; i++ )
       {
-         cpurv = rvStep( &cpuctx );
+         cpurv = rvStep( &tgctx.cpuctx );
          
          if( cpurv )
          {
@@ -120,9 +119,9 @@ int main( int argc,  char** argv )
 
    }
 
-   cpuctx.fetchInstruction = fetchInstruction;
-   cpuctx.fetchData        = fetchData;
-   cpuctx.storeData        = storeData;
+   tgctx.cpuctx.fetchInstruction = fetchInstruction;
+   tgctx.cpuctx.fetchData        = fetchData;
+   tgctx.cpuctx.storeData        = storeData;
 
 
    //sd card
@@ -159,7 +158,7 @@ int main( int argc,  char** argv )
       printf( "Error, can't init audio\n" );            
    }
 
-   rvReset( &cpuctx );
+   rvReset( &tgctx.cpuctx );
    if( srecLoadFile( ( char* )"boot.rec", &i ) )
    {
       printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
@@ -174,7 +173,7 @@ int main( int argc,  char** argv )
       }
       else
       {
-         cpuctx.pc = i;
+         tgctx.cpuctx.pc = i;
       }
    }
    else

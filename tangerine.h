@@ -2,6 +2,7 @@
 #define _TANGERINE_H
 
 #include "gfTypes.h"
+#include "emul.h"
 #include "sdramDmaRegs.h"
 #include "rootRegs.h"
 #include "spiSdCardRegs.h"
@@ -56,6 +57,8 @@ typedef struct _tangerineCtx_t
 
    uint8_t            consoleFont[2048];
 
+   emContext_t        cpuctx;
+   
    tgRootRegs_t       rootRegs;
    tgBlitterRegs_t    blitterRegs;
    tgSDRAMDMARegs_t   sdramDMARegs;
