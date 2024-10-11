@@ -2,6 +2,7 @@
 #define _TANGERINE_H
 
 #include "gfTypes.h"
+#include "emul.h"
 #include "sdramDmaRegs.h"
 #include "rootRegs.h"
 #include "spiSdCardRegs.h"
@@ -25,12 +26,15 @@
 
 #define _VIDEOMODE_TEXT40_ONLY              0x00
 #define _VIDEOMODE_TEXT80_ONLY              0x04
+#define _VIDEOMODE_TEXT80_60_ONLY           0x0c
 
 #define _VIDEOMODE_320_TEXT40_OVER_GFX      0x02
 #define _VIDEOMODE_320_TEXT80_OVER_GFX      0x06
+#define _VIDEOMODE_320_TEXT80_60_OVER_GFX   0x0e
 
 #define _VIDEOMODE_640_TEXT40_OVER_GFX      0x12
 #define _VIDEOMODE_640_TEXT80_OVER_GFX      0x16
+#define _VIDEOMODE_640_TEXT80_60_OVER_GFX   0x1e
 
 #define tgColor565( r, g, b ) ( uint16_t )((((uint16_t)b >> 3) & 31 ) | (((uint16_t)g & 252 ) << 3 ) | (((uint16_t)r & 248 ) << 8 ))
 #define tgColor565GetR( color ) ( uint16_t )(( color >> 8) & 0xf8 )
@@ -45,13 +49,16 @@ typedef struct _tangerineCtx_t
    SDL_Texture       *texture;
    uint32_t           displayFullscreen;
    uint32_t           exitMainLoop;
-      
+   uint32_t           debuggerActive;
+   
    void              *dmaRAM;
    void              *fastRAM;
    void              *systemRAM;
 
    uint8_t            consoleFont[2048];
 
+   emContext_t        cpuctx;
+   
    tgRootRegs_t       rootRegs;
    tgBlitterRegs_t    blitterRegs;
    tgSDRAMDMARegs_t   sdramDMARegs;

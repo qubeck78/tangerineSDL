@@ -7,7 +7,9 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
     uint16_t   cx;
     uint16_t   cy; 
     uint16_t   cxMax;
+    uint16_t   cyMax;
     uint16_t   cxStep;
+    uint16_t   cyStep;
 
     uint8_t   *letterPtr;
     uint8_t    letterData;
@@ -159,7 +161,6 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
     {
         //80 column mode
 
-        y       *= 16;
         x       *= 8;
         cxMax    = 8;
         cxStep   = 1;
@@ -169,15 +170,31 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
     {
         //40 column mode
 
-        y       *= 16;
         x       *= 16;
         cxMax    = 16;
         cxStep   = 2;
     }
 
+    if( ctx->rootRegs.videoMuxMode & 0x08 )
+    {
+        //60 row mode
+
+        y       *= 8;
+        cyMax    = 8;
+        cyStep   = 1;
+
+    }
+    else
+    {
+        //30 row mode
+        y       *= 16;
+        cyMax    = 16;
+        cyStep   = 2;
+    }
 
 
-    for( cy = 0; cy < 16; cy += 2 )
+
+    for( cy = 0; cy < cyMax; cy += cyStep )
     {
         letterData = *letterPtr++;
 
@@ -186,13 +203,21 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
             if( letterData & 0x80 )
             {
                 frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x ]      = letterColor;
-                frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x ]   = letterColor;
+
+                if( cyStep == 2 )
+                {
+                    frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x ]   = letterColor;
+                }
 
                 if( cxStep == 2 )
                 {
                     //40 columns
                     frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x + 1 ]      = letterColor;
-                    frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ]   = letterColor;
+                    
+                    if( cyStep == 2 )
+                    {
+                        frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ]   = letterColor;
+                    }
                 }
 
             }
@@ -208,13 +233,21 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
                             //background color
 
                             frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x ]      = backgroundColor;
-                            frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x ]   = backgroundColor;
+                            
+                            if( cyStep == 2 )
+                            {
+                                frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x ]   = backgroundColor;
+                            }
 
                             if( cxStep == 2 )
                             {
                                 //40 columns
                                 frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x + 1 ]      = backgroundColor;
-                                frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ]   = backgroundColor;
+
+                                if( cyStep == 2 )
+                                {
+                                    frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ]   = backgroundColor;
+                                }
                             }
 
                         }
@@ -226,19 +259,25 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
                             frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x ] = tgColor565( tgColor565GetR( pixel ) >> 1, 
                                 tgColor565GetG( pixel ) >> 1, tgColor565GetB( pixel ) >> 1 );
 
-                            pixel = frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x  ];
-                            frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x  ] = tgColor565( tgColor565GetR( pixel ) >> 1, 
-                                tgColor565GetG( pixel ) >> 1, tgColor565GetB( pixel ) >> 1 );
-                            
+                            if( cyStep == 2 )
+                            {
+                                pixel = frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x  ];
+                                frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x  ] = tgColor565( tgColor565GetR( pixel ) >> 1, 
+                                    tgColor565GetG( pixel ) >> 1, tgColor565GetB( pixel ) >> 1 );
+                            }
+
                             if( cxStep == 2 )
                             {
                                 pixel = frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x + 1 ];
                                 frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x + 1 ] = tgColor565( tgColor565GetR( pixel ) >> 1, 
                                 tgColor565GetG( pixel ) >> 1, tgColor565GetB( pixel ) >> 1 );
 
-                                pixel = frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ];
-                                frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ] = tgColor565( tgColor565GetR( pixel ) >> 1, 
-                                tgColor565GetG( pixel ) >> 1, tgColor565GetB( pixel ) >> 1 );
+                                if( cyStep == 2)
+                                {
+                                    pixel = frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ];
+                                    frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ] = tgColor565( tgColor565GetR( pixel ) >> 1, 
+                                        tgColor565GetG( pixel ) >> 1, tgColor565GetB( pixel ) >> 1 );
+                                }
                             }
                         }
 
@@ -250,18 +289,23 @@ static uint32_t tgputChar( tangerineCtx_t *ctx, uint16_t *frameBuffer, uint16_t 
                     //text only
 
                     frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x ]      = backgroundColor;
-                    frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x ]   = backgroundColor;
+
+                    if( cyStep == 2 )
+                    {
+                        frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x ]   = backgroundColor;
+                    }
 
                     if( cxStep == 2 )
                     {
                         //40 columns
                         frameBuffer[ ( ( cy + y )  * 640 ) +  cx + x + 1 ]      = backgroundColor;
-                        frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ]   = backgroundColor;
+
+                        if( cyStep == 2 )
+                        {
+                            frameBuffer[ ( ( cy + y + 1 ) * 640 ) +  cx + x + 1 ]   = backgroundColor;
+                        }
                     }
-
                 }
-
-
             }
 
             letterData <<= 1;
@@ -287,6 +331,7 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
 
     uint8_t     *textOverlayPtr;
     uint32_t     toWidth;
+    uint32_t     toHeight;
     uint8_t      letter;
     uint8_t      format;
 
@@ -300,8 +345,8 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
     {
         case _VIDEOMODE_640_TEXT40_OVER_GFX:
         case _VIDEOMODE_640_TEXT80_OVER_GFX:
+        case _VIDEOMODE_640_TEXT80_60_OVER_GFX:
 
-          
             frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
 
             textureBuffer   = (uint16_t*)texturePixels;
@@ -332,6 +377,7 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
 
         case _VIDEOMODE_320_TEXT40_OVER_GFX:
         case _VIDEOMODE_320_TEXT80_OVER_GFX:
+        case _VIDEOMODE_320_TEXT80_60_OVER_GFX:
 
          
             frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
@@ -379,9 +425,20 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
       toWidth = 40;
    }
 
-   textOverlayPtr = &((uint8_t*)ctx->systemRAM)[0x6d40];
+   if( ctx->rootRegs.videoMuxMode & 0x08 )
+   {
+      //60 row mode
+      toHeight = 60;
+   }
+   else
+   {
+      //30 column mode
+      toHeight = 30;
+   }
+
+   textOverlayPtr = &((uint8_t*)ctx->systemRAM)[0x5a80];
    
-   for( y = 0; y < 30; y++ )
+   for( y = 0; y < toHeight; y++ )
    {
       for( x = 0; x < toWidth; x++ )
       {
@@ -389,6 +446,7 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
           format = *textOverlayPtr++;
 
           tgputChar( ctx, (uint16_t*)texturePixels, x, y, letter, format );
+
       }
    }  
 

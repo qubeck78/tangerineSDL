@@ -25,6 +25,8 @@
 #include "memio.h"
 #include "srec.h"
 #include "sdCard.h"
+#include "disasm.h"
+#include "debugger.h"
 
 #ifdef __EMSCRIPTEN__
 
@@ -34,45 +36,70 @@
 #endif
 
 tangerineCtx_t tgctx;
-emContext_t    cpuctx;
+debugCtx_t     dbgctx;
 
 void mainLoop()
 {
    uint32_t cpurv;
    uint32_t i;
 
-   for( i = 0; i < 1000000; i++ )
+   if( tgctx.debuggerActive )
    {
-      cpurv = rvStep( &cpuctx );
+
       
-      if( cpurv )
+      if( dbgMain( &dbgctx ) == RV_QUIT )
       {
-         break;
-      }
+
+         #ifdef __EMSCRIPTEN__
+
+            emscripten_cancel_main_loop();
+
+         #else
+
+            tgctx.exitMainLoop = 1;
+
+         #endif
+      }   
+
+      tgRedrawScreen( &tgctx );
+      //audioMain( &tgctx.audioContext );
 
    }
-
-   tgRedrawScreen( &tgctx );
-
-   tgctx.rootRegs.frameTimer++;
-   tgctx.rootRegs.videoVSync = 1;   //sim vsync
-
-   audioMain( &tgctx.audioContext );
-
-   if( tgHandleEvents( &tgctx ) == RV_QUIT )
+   else
    {
+      for( i = 0; i < 1000000; i++ )
+      {
+         cpurv = rvStep( &tgctx.cpuctx );
+         
+         if( cpurv )
+         {
+            tgctx.debuggerActive = 1;  //init & run debugger
+            break;
+         }
 
-      #ifdef __EMSCRIPTEN__
+      }
 
-         emscripten_cancel_main_loop();
+      tgRedrawScreen( &tgctx );
 
-      #else
+      tgctx.rootRegs.frameTimer++;
+      tgctx.rootRegs.videoVSync = 1;   //sim vsync
 
-         tgctx.exitMainLoop = 1;
+      audioMain( &tgctx.audioContext );
 
-      #endif
-   }   
+      if( tgHandleEvents( &tgctx ) == RV_QUIT )
+      {
 
+         #ifdef __EMSCRIPTEN__
+
+            emscripten_cancel_main_loop();
+
+         #else
+
+            tgctx.exitMainLoop = 1;
+
+         #endif
+      }   
+   }
 }
 
 
@@ -81,7 +108,7 @@ int main( int argc,  char** argv )
    uint32_t i;
 
 
-   printf( "TangerineRiscVSOC emulator B20240929 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20241011 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -92,9 +119,9 @@ int main( int argc,  char** argv )
 
    }
 
-   cpuctx.fetchInstruction = fetchInstruction;
-   cpuctx.fetchData        = fetchData;
-   cpuctx.storeData        = storeData;
+   tgctx.cpuctx.fetchInstruction = fetchInstruction;
+   tgctx.cpuctx.fetchData        = fetchData;
+   tgctx.cpuctx.storeData        = storeData;
 
 
    //sd card
@@ -131,7 +158,7 @@ int main( int argc,  char** argv )
       printf( "Error, can't init audio\n" );            
    }
 
-   rvReset( &cpuctx );
+   rvReset( &tgctx.cpuctx );
    if( srecLoadFile( ( char* )"boot.rec", &i ) )
    {
       printf( "Error, can't load bootloader. Ensure boot.rec file is in the same dir as emulator executable.\n" );
@@ -139,14 +166,15 @@ int main( int argc,  char** argv )
 
    if( argc > 1 )
    {
-      printf( "Loading: \"%s\"\n", argv[1] );
+      printf( "Loading: \"%s\" ", argv[1] );
       if( srecLoadFile( argv[1], &i ) )
       {
          printf( "error\n" );
       }
       else
       {
-         cpuctx.pc = i;
+         tgctx.cpuctx.pc = i;
+         printf( "ok\n" );
       }
    }
    else
@@ -154,6 +182,16 @@ int main( int argc,  char** argv )
       printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
    }
 
+   printf( "\n" );
+
+   if( dbgInit( &dbgctx, &tgctx ) )
+   {
+      printf( "Error, can't init debugger\n" );
+   }
+   else
+   {
+      printf( "Press F12 to activate debugger\n" );
+   }
 
    tgctx.exitMainLoop = 0;
 

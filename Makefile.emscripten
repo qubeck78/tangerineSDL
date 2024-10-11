@@ -10,8 +10,8 @@ LD = emcc -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sINITIAL_MEMORY=73400320
 
 all: $(TARGET).html
 
-$(TARGET).html: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o audioRegs.o audio.o --preload-file bin@/ -o html/$(TARGET).html
+$(TARGET).html: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o --preload-file bin@/ -o html/$(TARGET).html
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -63,6 +63,12 @@ srec.o: srec.cpp
 
 disasm.o: disasm.cpp
 	$(CC) -o disasm.o disasm.cpp 
+
+debugger.o: debugger.cpp
+	$(CC) -o debugger.o debugger.cpp 
+
+console.o: console.cpp
+	$(CC) -o console.o console.cpp 
 
 clean:
 	rm -f *.o *.rec *.disasm *.elf *.mif *.mi *.bin *.map *.exe

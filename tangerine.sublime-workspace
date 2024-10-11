@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"con",
+				"conPrintF"
+			],
+			[
+				"tg",
+				"tgCtx"
+			],
+			[
+				"t",
+				"tgVMMode"
+			],
+			[
+				"tgc",
+				"tgctx"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
 				"ali",
 				"align-self"
 			],
@@ -80,10 +100,6 @@
 				"cpurv"
 			],
 			[
-				"tgc",
-				"tgctx"
-			],
-			[
 				"res",
 				"responseIdx"
 			],
@@ -147,8 +163,403 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 1881,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 3918,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"insert",
+					{
+						"characters": "\nelse"
+					},
+					"BgAAAM8NAAAAAAAA0A0AAAAAAAAAAAAA0A0AAAAAAADTDQAAAAAAAAAAAADTDQAAAAAAANQNAAAAAAAAAAAAANQNAAAAAAAA1Q0AAAAAAAAAAAAA1Q0AAAAAAADWDQAAAAAAAAAAAADWDQAAAAAAANcNAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAzw0AAAAAAADPDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					4,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"BAAAANcNAAAAAAAA2A0AAAAAAAAAAAAA2A0AAAAAAADbDQAAAAAAAAAAAADYDQAAAAAAANgNAAAAAAAAAwAAACAgINgNAAAAAAAA3g0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA1w0AAAAAAADXDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					5,
+					1,
+					"insert_snippet",
+					{
+						"contents": "{$0}"
+					},
+					"AwAAAN4NAAAAAAAA4A0AAAAAAAAAAAAA2A0AAAAAAADYDQAAAAAAAAYAAAAgICAgICDYDQAAAAAAANsNAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA3g0AAAAAAADeDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					6,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Add Line in Braces.sublime-macro"
+					},
+					"BgAAANwNAAAAAAAA3Q0AAAAAAAAAAAAA3Q0AAAAAAADgDQAAAAAAAAAAAADgDQAAAAAAAOENAAAAAAAAAAAAAOENAAAAAAAA5A0AAAAAAAAAAAAA3Q0AAAAAAADdDQAAAAAAAAMAAAAgICDdDQAAAAAAAOMNAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA3A0AAAAAAADcDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					7,
+					1,
+					"insert",
+					{
+						"characters": "printf"
+					},
+					"BgAAAOMNAAAAAAAA5A0AAAAAAAAAAAAA5A0AAAAAAADlDQAAAAAAAAAAAADlDQAAAAAAAOYNAAAAAAAAAAAAAOYNAAAAAAAA5w0AAAAAAAAAAAAA5w0AAAAAAADoDQAAAAAAAAAAAADoDQAAAAAAAOkNAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA4w0AAAAAAADjDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					8,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAOkNAAAAAAAA6w0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6Q0AAAAAAADpDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					9,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAOoNAAAAAAAA6w0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6g0AAAAAAADqDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					10,
+					1,
+					"insert_snippet",
+					{
+						"contents": "\"$0\""
+					},
+					"AQAAAOsNAAAAAAAA7Q0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA6w0AAAAAAADrDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					11,
+					1,
+					"insert",
+					{
+						"characters": "Press"
+					},
+					"BQAAAOwNAAAAAAAA7Q0AAAAAAAAAAAAA7Q0AAAAAAADuDQAAAAAAAAAAAADuDQAAAAAAAO8NAAAAAAAAAAAAAO8NAAAAAAAA8A0AAAAAAAAAAAAA8A0AAAAAAADxDQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA7A0AAAAAAADsDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					12,
+					1,
+					"insert",
+					{
+						"characters": " F12"
+					},
+					"BAAAAPENAAAAAAAA8g0AAAAAAAAAAAAA8g0AAAAAAADzDQAAAAAAAAAAAADzDQAAAAAAAPQNAAAAAAAAAAAAAPQNAAAAAAAA9Q0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8Q0AAAAAAADxDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					13,
+					1,
+					"insert",
+					{
+						"characters": " tro"
+					},
+					"BAAAAPUNAAAAAAAA9g0AAAAAAAAAAAAA9g0AAAAAAAD3DQAAAAAAAAAAAAD3DQAAAAAAAPgNAAAAAAAAAAAAAPgNAAAAAAAA+Q0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA9Q0AAAAAAAD1DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					14,
+					1,
+					"insert",
+					{
+						"characters": " a"
+					},
+					"AgAAAPkNAAAAAAAA+g0AAAAAAAAAAAAA+g0AAAAAAAD7DQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA+Q0AAAAAAAD5DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					15,
+					4,
+					"left_delete",
+					null,
+					"BAAAAPoNAAAAAAAA+g0AAAAAAAABAAAAYfkNAAAAAAAA+Q0AAAAAAAABAAAAIPgNAAAAAAAA+A0AAAAAAAABAAAAb/cNAAAAAAAA9w0AAAAAAAABAAAAcg",
+					"AQAAAAAAAAABAAAA+w0AAAAAAAD7DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					16,
+					1,
+					"insert",
+					{
+						"characters": "o"
+					},
+					"AQAAAPcNAAAAAAAA+A0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA9w0AAAAAAAD3DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					17,
+					1,
+					"insert",
+					{
+						"characters": " actr"
+					},
+					"BQAAAPgNAAAAAAAA+Q0AAAAAAAAAAAAA+Q0AAAAAAAD6DQAAAAAAAAAAAAD6DQAAAAAAAPsNAAAAAAAAAAAAAPsNAAAAAAAA/A0AAAAAAAAAAAAA/A0AAAAAAAD9DQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA+A0AAAAAAAD4DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					18,
+					1,
+					"left_delete",
+					null,
+					"AQAAAPwNAAAAAAAA/A0AAAAAAAABAAAAcg",
+					"AQAAAAAAAAABAAAA/Q0AAAAAAAD9DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					19,
+					1,
+					"insert",
+					{
+						"characters": "ivate"
+					},
+					"BQAAAPwNAAAAAAAA/Q0AAAAAAAAAAAAA/Q0AAAAAAAD+DQAAAAAAAAAAAAD+DQAAAAAAAP8NAAAAAAAAAAAAAP8NAAAAAAAAAA4AAAAAAAAAAAAAAA4AAAAAAAABDgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA/A0AAAAAAAD8DQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					20,
+					1,
+					"insert",
+					{
+						"characters": " debuff"
+					},
+					"BwAAAAEOAAAAAAAAAg4AAAAAAAAAAAAAAg4AAAAAAAADDgAAAAAAAAAAAAADDgAAAAAAAAQOAAAAAAAAAAAAAAQOAAAAAAAABQ4AAAAAAAAAAAAABQ4AAAAAAAAGDgAAAAAAAAAAAAAGDgAAAAAAAAcOAAAAAAAAAAAAAAcOAAAAAAAACA4AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAAQ4AAAAAAAABDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					21,
+					2,
+					"left_delete",
+					null,
+					"AgAAAAcOAAAAAAAABw4AAAAAAAABAAAAZgYOAAAAAAAABg4AAAAAAAABAAAAZg",
+					"AQAAAAAAAAABAAAACA4AAAAAAAAIDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					22,
+					1,
+					"insert",
+					{
+						"characters": "gger"
+					},
+					"BAAAAAYOAAAAAAAABw4AAAAAAAAAAAAABw4AAAAAAAAIDgAAAAAAAAAAAAAIDgAAAAAAAAkOAAAAAAAAAAAAAAkOAAAAAAAACg4AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAABg4AAAAAAAAGDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					23,
+					1,
+					"insert",
+					{
+						"characters": "\\m"
+					},
+					"AgAAAAoOAAAAAAAACw4AAAAAAAAAAAAACw4AAAAAAAAMDgAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAACg4AAAAAAAAKDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					24,
+					1,
+					"left_delete",
+					null,
+					"AQAAAAsOAAAAAAAACw4AAAAAAAABAAAAbQ",
+					"AQAAAAAAAAABAAAADA4AAAAAAAAMDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					25,
+					1,
+					"insert",
+					{
+						"characters": "n"
+					},
+					"AQAAAAsOAAAAAAAADA4AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAACw4AAAAAAAALDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					30,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAA0OAAAAAAAADg4AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAADQ4AAAAAAAANDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					32,
+					1,
+					"insert",
+					{
+						"characters": ";"
+					},
+					"AQAAAA8OAAAAAAAAEA4AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAADw4AAAAAAAAPDgAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					38,
+					2,
+					"right_delete",
+					null,
+					"AgAAAE0MAAAAAAAATQwAAAAAAAABAAAAXE0MAAAAAAAATQwAAAAAAAABAAAAbg",
+					"AQAAAAAAAAABAAAATQwAAAAAAABNDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					39,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAE0MAAAAAAAATgwAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATQwAAAAAAABNDAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					46,
+					1,
+					"paste",
+					null,
+					"AQAAAOMMAAAAAAAAAQ0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA4wwAAAAAAADjDAAAAAAAAAAAAAAAAAAA"
+				],
+				[
+					48,
+					5,
+					"left_delete",
+					null,
+					"BQAAAPkMAAAAAAAA+QwAAAAAAAABAAAAcvgMAAAAAAAA+AwAAAAAAAABAAAAb/cMAAAAAAAA9wwAAAAAAAABAAAAcvYMAAAAAAAA9gwAAAAAAAABAAAAcvUMAAAAAAAA9QwAAAAAAAABAAAAZQ",
+					"AQAAAAAAAAABAAAA+gwAAAAAAAD6DAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					49,
+					1,
+					"insert",
+					{
+						"characters": "ok"
+					},
+					"AgAAAPUMAAAAAAAA9gwAAAAAAAAAAAAA9gwAAAAAAAD3DAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA9QwAAAAAAAD1DAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					54,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAIoNAAAAAAAAiw0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAig0AAAAAAACKDQAAAAAAAAAAAAAAQGhA"
+				],
+				[
+					55,
+					1,
+					"reindent",
+					null,
+					"AQAAAIsNAAAAAAAAjg0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAiw0AAAAAAACLDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					56,
+					1,
+					"insert",
+					{
+						"characters": "printf"
+					},
+					"BgAAAI4NAAAAAAAAjw0AAAAAAAAAAAAAjw0AAAAAAACQDQAAAAAAAAAAAACQDQAAAAAAAJENAAAAAAAAAAAAAJENAAAAAAAAkg0AAAAAAAAAAAAAkg0AAAAAAACTDQAAAAAAAAAAAACTDQAAAAAAAJQNAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAjg0AAAAAAACODQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					57,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAJQNAAAAAAAAlg0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlA0AAAAAAACUDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					58,
+					1,
+					"insert_snippet",
+					{
+						"contents": "\"$0\""
+					},
+					"AQAAAJUNAAAAAAAAlw0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlQ0AAAAAAACVDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					59,
+					1,
+					"insert",
+					{
+						"characters": "\\n"
+					},
+					"AgAAAJYNAAAAAAAAlw0AAAAAAAAAAAAAlw0AAAAAAACYDQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlg0AAAAAAACWDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					61,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAJUNAAAAAAAAlg0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlQ0AAAAAAACVDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					63,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAJoNAAAAAAAAmw0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAmg0AAAAAAACaDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					65,
+					1,
+					"insert",
+					{
+						"characters": ";"
+					},
+					"AQAAAJwNAAAAAAAAnQ0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAnA0AAAAAAACcDQAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		}
 	],
-	"build_system": "Packages/Makefile/Make.sublime-build",
+	"build_system": "Packages/User/make run.sublime-build",
 	"build_system_choices":
 	[
 		[
@@ -219,7 +630,7 @@
 				]
 			],
 			[
-				"Packages/Makefile/Make.sublime-build",
+				"Packages/User/make run.sublime-build",
 				""
 			]
 		],
@@ -339,45 +750,49 @@
 	},
 	"expanded_folders":
 	[
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/html"
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator"
 	],
 	"file_history":
 	[
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tangerine.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitter.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/main.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/html/tangerine.html",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.linux",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.emscripten",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tangerine.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/debugger.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/disasm.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/disasm.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/console.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/emul.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/emul.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/main.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tgVideoOut.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.linux",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/memio.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/memio.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tangerine.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/usbHost.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/rootRegs.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/console.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tgVideoOut.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/debugger.h",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/debugger.c",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitter.cpp",
+		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/html/tangerine.html",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audio.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audioRegs.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/Makefile.emscripten",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/sdramDmaRegs.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audio.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/memio.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/audioRegs.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitterRegs.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/rootRegs.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitterRegs.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/blitter.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tgVideoOut.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/emul.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/spiSdCardRegs.cpp",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/memio.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/emul.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/sdCard.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/srec.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/sdCard.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/disasm.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/gfTypes.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/disasm.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/usbHost.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/usbHostRegs.cpp",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/usbHostRegs.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/usbHost.h",
-		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/tgVideoOut.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/rootRegs.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/sdramDmaRegs.h",
 		"/F/msys64/home/qubec/ProjektyGCCWindows/tangerineSOCEmulator/spiSdCardRegs.h",
@@ -450,6 +865,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cpuctx",
+			"}\n",
 			"var module",
 			"7f",
 			"array",
@@ -512,6 +929,69 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1881,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 638.0,
+						"translation.y": 57.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.cpp",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3918,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3325,
+								3325
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2964.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -548,7 +1028,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 219.0
+		"height": 204.0
 	},
 	"output.find_results":
 	{

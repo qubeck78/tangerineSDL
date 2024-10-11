@@ -29,7 +29,7 @@ uint32_t rvReset( emContext_t *ctx )
 
    ctx->pc        = 0;
    ctx->regs[0]   = 0;
-   ctx->regs[2]   = 0x6d40;
+   ctx->regs[2]   = 0x5a80;
 
    ctx->instrCounter = 0;
 
