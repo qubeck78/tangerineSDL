@@ -428,7 +428,7 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
    if( ctx->rootRegs.videoMuxMode & 0x08 )
    {
       //60 row mode
-      toHeight = 80;
+      toHeight = 60;
    }
    else
    {

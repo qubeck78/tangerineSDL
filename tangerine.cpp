@@ -1,7 +1,6 @@
 
 #include "tangerine.h"
 #include "usbHost.h"
-
 #include <stdio.h>
 
 
@@ -11,13 +10,13 @@ uint32_t tgInit( tangerineCtx_t *ctx )
    FILE  *in;
    uint32_t i;
 
-   ctx->window    = NULL;
-   ctx->renderer  = NULL;
-   ctx->texture   = NULL;
-   ctx->dmaRAM    = NULL;
-   ctx->fastRAM   = NULL;
-   ctx->systemRAM = NULL;
-
+   ctx->window          = NULL;
+   ctx->renderer        = NULL;
+   ctx->texture         = NULL;
+   ctx->dmaRAM          = NULL;
+   ctx->fastRAM         = NULL;
+   ctx->systemRAM       = NULL;
+   ctx->debuggerActive  = 0;
 
    if( SDL_Init( SDL_INIT_TIMER |  SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO ) ) 
    {
@@ -135,7 +134,16 @@ uint32_t tgHandleEvents( tangerineCtx_t *ctx )
       }else if( event.type == SDL_KEYDOWN )
       {
 
-         usbHostKeyDownEvent( &ctx->usbHostContext, event.key.keysym.scancode );         
+         //check if F12 pressed ( to invoke debugger )
+         if( event.key.keysym.sym == SDLK_F12 )
+         {
+            ctx->debuggerActive = 1;
+         }
+         else
+         {
+            //pass event to USBhost emulator
+            usbHostKeyDownEvent( &ctx->usbHostContext, event.key.keysym.scancode );         
+         }
 
       }else if( event.type == SDL_KEYUP )
       {

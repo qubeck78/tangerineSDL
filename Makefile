@@ -1,13 +1,13 @@
 
 TARGET = tangerine
-CC = x86_64-w64-mingw32-g++ -c -O3 -fpermissive  
+CC = x86_64-w64-mingw32-g++ -c -O3 -fpermissive -mthreads
 LD = x86_64-w64-mingw32-g++ 
 
 
 all: $(TARGET).exe
 
-$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o audioRegs.o audio.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o audioRegs.o audio.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -62,6 +62,9 @@ disasm.o: disasm.cpp
 
 debugger.o: debugger.cpp
 	$(CC) -o debugger.o debugger.cpp 
+
+console.o: console.cpp
+	$(CC) -o console.o console.cpp 
 
 clean:
 	rm -f *.o *.rec *.disasm *.elf *.mif *.mi *.bin *.map *.exe

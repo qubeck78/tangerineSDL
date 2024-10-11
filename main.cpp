@@ -37,44 +37,70 @@
 
 tangerineCtx_t tgctx;
 emContext_t    cpuctx;
+debugCtx_t     dbgctx;
 
 void mainLoop()
 {
    uint32_t cpurv;
    uint32_t i;
 
-   for( i = 0; i < 1000000; i++ )
+   if( tgctx.debuggerActive )
    {
-      cpurv = rvStep( &cpuctx );
+
       
-      if( cpurv )
+      if( dbgMain( &dbgctx ) == RV_QUIT )
       {
-         break;
-      }
+
+         #ifdef __EMSCRIPTEN__
+
+            emscripten_cancel_main_loop();
+
+         #else
+
+            tgctx.exitMainLoop = 1;
+
+         #endif
+      }   
+
+      tgRedrawScreen( &tgctx );
+      //audioMain( &tgctx.audioContext );
 
    }
-
-   tgRedrawScreen( &tgctx );
-
-   tgctx.rootRegs.frameTimer++;
-   tgctx.rootRegs.videoVSync = 1;   //sim vsync
-
-   audioMain( &tgctx.audioContext );
-
-   if( tgHandleEvents( &tgctx ) == RV_QUIT )
+   else
    {
+      for( i = 0; i < 1000000; i++ )
+      {
+         cpurv = rvStep( &cpuctx );
+         
+         if( cpurv )
+         {
+            tgctx.debuggerActive = 1;  //init & run debugger
+            break;
+         }
 
-      #ifdef __EMSCRIPTEN__
+      }
 
-         emscripten_cancel_main_loop();
+      tgRedrawScreen( &tgctx );
 
-      #else
+      tgctx.rootRegs.frameTimer++;
+      tgctx.rootRegs.videoVSync = 1;   //sim vsync
 
-         tgctx.exitMainLoop = 1;
+      audioMain( &tgctx.audioContext );
 
-      #endif
-   }   
+      if( tgHandleEvents( &tgctx ) == RV_QUIT )
+      {
 
+         #ifdef __EMSCRIPTEN__
+
+            emscripten_cancel_main_loop();
+
+         #else
+
+            tgctx.exitMainLoop = 1;
+
+         #endif
+      }   
+   }
 }
 
 
@@ -83,7 +109,7 @@ int main( int argc,  char** argv )
    uint32_t i;
 
 
-   printf( "TangerineRiscVSOC emulator B20241006 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20241011 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
@@ -156,6 +182,11 @@ int main( int argc,  char** argv )
       printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
    }
 
+
+   if( dbgInit( &dbgctx, &tgctx ) )
+   {
+      printf( "Error, can't init debugger\n" );
+   }
 
    tgctx.exitMainLoop = 0;
 

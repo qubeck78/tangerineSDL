@@ -48,7 +48,8 @@ typedef struct _tangerineCtx_t
    SDL_Texture       *texture;
    uint32_t           displayFullscreen;
    uint32_t           exitMainLoop;
-      
+   uint32_t           debuggerActive;
+   
    void              *dmaRAM;
    void              *fastRAM;
    void              *systemRAM;
