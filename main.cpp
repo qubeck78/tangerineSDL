@@ -166,7 +166,7 @@ int main( int argc,  char** argv )
 
    if( argc > 1 )
    {
-      printf( "Loading: \"%s\"\n", argv[1] );
+      printf( "Loading: \"%s\" ", argv[1] );
       if( srecLoadFile( argv[1], &i ) )
       {
          printf( "error\n" );
@@ -174,6 +174,7 @@ int main( int argc,  char** argv )
       else
       {
          tgctx.cpuctx.pc = i;
+         printf( "ok\n" );
       }
    }
    else
@@ -181,10 +182,15 @@ int main( int argc,  char** argv )
       printf( "Error: No app to load given - running default bootloader.\nusage: tangerine program.rec\n" );
    }
 
+   printf( "\n" );
 
    if( dbgInit( &dbgctx, &tgctx ) )
    {
       printf( "Error, can't init debugger\n" );
+   }
+   else
+   {
+      printf( "Press F12 to activate debugger\n" );
    }
 
    tgctx.exitMainLoop = 0;
