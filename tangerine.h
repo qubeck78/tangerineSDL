@@ -37,6 +37,11 @@
 #define _VIDEOMODE_640_TEXT80_OVER_GFX      0x16
 #define _VIDEOMODE_640_TEXT80_60_OVER_GFX   0x1e
 
+#define _VIDEOMODE_320_8BPP_TEXT40_OVER_GFX     0x22
+#define _VIDEOMODE_320_8BPP_TEXT80_OVER_GFX     0x26
+#define _VIDEOMODE_320_8BPP_TEXT80_60_OVER_GFX  0x2e
+
+
 #define tgColor565( r, g, b ) ( uint16_t )((((uint16_t)b >> 3) & 31 ) | (((uint16_t)g & 252 ) << 3 ) | (((uint16_t)r & 248 ) << 8 ))
 #define tgColor565GetR( color ) ( uint16_t )(( color >> 8) & 0xf8 )
 #define tgColor565GetG( color ) ( uint16_t )(( color >> 3) & 0xfc )

@@ -325,10 +325,11 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
     void        *texturePixels;
     
     uint16_t    *frameBuffer;
+    uint8_t     *frameBufferB;
     uint16_t    *textureBuffer;
     uint16_t    *textureRowBuffer;
     uint16_t     pixel;
-
+    uint32_t     paletteEntryValue;
     uint8_t     *textOverlayPtr;
     uint32_t     toWidth;
     uint32_t     toHeight;
@@ -380,9 +381,9 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
         case _VIDEOMODE_320_TEXT80_60_OVER_GFX:
 
          
-            frameBuffer     = &( (uint16_t*) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
+            frameBuffer     = &( ( uint16_t * ) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 1 ];
 
-            textureBuffer   = (uint16_t*)texturePixels;
+            textureBuffer   = ( uint16_t * )texturePixels;
 
 
             for( y = 0; y < 240; y++ )
@@ -410,6 +411,41 @@ uint32_t tgRedrawScreen( tangerineCtx_t *ctx )
             }
 
         break;
+
+        case _VIDEOMODE_320_8BPP_TEXT40_OVER_GFX:
+        case _VIDEOMODE_320_8BPP_TEXT80_OVER_GFX:
+        case _VIDEOMODE_320_8BPP_TEXT80_60_OVER_GFX:
+
+            frameBufferB    = &( ( uint8_t * ) ctx->dmaRAM )[ ctx->sdramDMARegs.ch3DmaPointerStart << 2 ];
+            textureBuffer   = ( uint16_t * )texturePixels;
+
+            for( y = 0; y < 240; y++ )
+            {
+                for( x = 0; x < 320; x++ )
+                {
+                    
+                    paletteEntryValue = ctx->gfxPixelGenRegs.palette[ *frameBufferB++ ];
+                    
+                    pixel = tgColor565( ( ( paletteEntryValue >> 16 ) & 0xff ), ( ( paletteEntryValue >> 8 ) & 0xff ),  ( paletteEntryValue & 0xff ) );
+
+                    textureBuffer[ ( x * 2 ) + ( y * 2 ) * 640 ]                = pixel;
+                    textureBuffer[ ( x * 2 ) + 1 + ( y * 2 ) * 640 ]            = pixel;
+                    textureBuffer[ ( x * 2 ) + ( ( y * 2 ) + 1 ) * 640 ]        = pixel;
+                    textureBuffer[ ( x * 2 ) + 1 + ( ( y * 2 ) + 1 ) * 640 ]    = pixel;
+
+                }
+
+                if( y & 1 )
+                {
+                    frameBufferB += ( ctx->sdramDMARegs.ch3DmaRequest1Modulo << 2 );
+                }
+                else
+                {
+                    frameBufferB += ( ctx->sdramDMARegs.ch3DmaRequest0Modulo << 2 );
+                }
+
+            }
+        break; 
    }
 
    //text overlay

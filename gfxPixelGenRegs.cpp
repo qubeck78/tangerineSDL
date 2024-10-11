@@ -22,7 +22,6 @@ uint32_t gfxPixelGenRegsReadReg( tgGfxPixelGenRegs_t *regs, uint32_t addr )
 
    if( addr & 0x20000 )
    {
-
       return regs->palette[ ( addr >> 2 ) & 0xff ];
    }
    else
