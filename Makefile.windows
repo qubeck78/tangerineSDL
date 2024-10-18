@@ -7,7 +7,7 @@ LD = x86_64-w64-mingw32-g++
 all: $(TARGET).exe
 
 $(TARGET).exe: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET)
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o -lmingw32  -lSDL2main -lSDL2 -o bin/$(TARGET).exe
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -75,7 +75,6 @@ clean:
 
 
 run: $(TARGET).exe
-	cd bin
-	start $(TARGET).exe shell.rec
+	cd bin && start $(TARGET).exe shell.rec
 	
 	
