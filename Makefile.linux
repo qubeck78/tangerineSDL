@@ -6,8 +6,8 @@ LD = g++
 
 all: $(TARGET)
 
-$(TARGET): main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o -lSDL2main -lSDL2 -o bin/$(TARGET)
+$(TARGET): main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o -lSDL2main -lSDL2 -o bin/$(TARGET)
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -47,6 +47,9 @@ audioRegs.o: audioRegs.cpp
 
 audio.o: audio.cpp
 	$(CC) -o audio.o audio.cpp
+
+gfxPixelGenRegs.o: gfxPixelGenRegs.cpp
+	$(CC) -o gfxPixelGenRegs.o gfxPixelGenRegs.cpp
 
 emul.o: emul.cpp
 	$(CC) -o emul.o emul.cpp 

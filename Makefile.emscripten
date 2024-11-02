@@ -10,8 +10,8 @@ LD = emcc -sUSE_SDL=2 -sUSE_SDL_IMAGE=2 -sINITIAL_MEMORY=73400320
 
 all: $(TARGET).html
 
-$(TARGET).html: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o
-	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o --preload-file bin@/ -o html/$(TARGET).html
+$(TARGET).html: main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o
+	$(LD) main.o tangerine.o tgVideoOut.o emul.o memio.o srec.o sdramDmaRegs.o rootRegs.o spiSdCardRegs.o usbHostRegs.o sdCard.o blitterRegs.o blitter.o usbHost.o disasm.o debugger.o console.o audioRegs.o audio.o gfxPixelGenRegs.o --preload-file bin@/ -o html/$(TARGET).html
 
 main.o: main.cpp
 	$(CC) -o main.o main.cpp 
@@ -51,6 +51,9 @@ audioRegs.o: audioRegs.cpp
 
 audio.o: audio.cpp
 	$(CC) -o audio.o audio.cpp
+
+gfxPixelGenRegs.o: gfxPixelGenRegs.cpp
+	$(CC) -o gfxPixelGenRegs.o gfxPixelGenRegs.cpp
 
 emul.o: emul.cpp
 	$(CC) -o emul.o emul.cpp 

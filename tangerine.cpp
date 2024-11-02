@@ -117,6 +117,7 @@ uint32_t tgInit( tangerineCtx_t *ctx )
    spiSdCardRegsInit( &ctx->spiSdCardRegs );
    usbHostRegsInit( &ctx->usbHostRegs );
    audioRegsInit( &ctx->audioRegs );
+   gfxPixelGenRegsInit( &ctx->gfxPixelGenRegs );
    
    return RV_OK;        
 }

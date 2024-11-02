@@ -39,7 +39,7 @@ if (ENVIRONMENT_IS_NODE) {
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
-// include: C:\Users\qubec\AppData\Local\Temp\tmp6ox7qt72.js
+// include: C:\Users\qubec\AppData\Local\Temp\tmpugmc0mr1.js
 
   if (!Module['expectedDataFileDownloads']) {
     Module['expectedDataFileDownloads'] = 0;
@@ -215,25 +215,25 @@ var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
     }
 
     }
-    loadPackage({"files": [{"filename": "/asteroids.rec", "start": 0, "end": 189248}, {"filename": "/boot.rec", "start": 189248, "end": 203316}, {"filename": "/commanche.rec", "start": 203316, "end": 437420}, {"filename": "/donut.rec", "start": 437420, "end": 594960}, {"filename": "/emulator.rec", "start": 594960, "end": 993138}, {"filename": "/font.dat", "start": 993138, "end": 995186}, {"filename": "/fractal.rec", "start": 995186, "end": 1183964}, {"filename": "/gfxTest8bpp.rec", "start": 1183964, "end": 1352350}, {"filename": "/prog.rec", "start": 1352350, "end": 1363834}, {"filename": "/raycaster.rec", "start": 1363834, "end": 1608768}, {"filename": "/raytrace.rec", "start": 1608768, "end": 1901918}, {"filename": "/sdcard.img", "start": 1901918, "end": 69010782}, {"filename": "/shell.rec", "start": 69010782, "end": 69650154}, {"filename": "/slideshow.rec", "start": 69650154, "end": 69905184}, {"filename": "/tunnel.rec", "start": 69905184, "end": 70180538}], "remote_package_size": 70180538});
+    loadPackage({"files": [{"filename": "/asteroids.rec", "start": 0, "end": 189248}, {"filename": "/boot.rec", "start": 189248, "end": 203316}, {"filename": "/commanche.rec", "start": 203316, "end": 437420}, {"filename": "/donut.rec", "start": 437420, "end": 594960}, {"filename": "/doom.rec", "start": 594960, "end": 2157880}, {"filename": "/emulator.rec", "start": 2157880, "end": 2556058}, {"filename": "/font.dat", "start": 2556058, "end": 2558106}, {"filename": "/fractal.rec", "start": 2558106, "end": 2746884}, {"filename": "/gfxTest8bpp.rec", "start": 2746884, "end": 2915270}, {"filename": "/prog.rec", "start": 2915270, "end": 2926754}, {"filename": "/raycaster.rec", "start": 2926754, "end": 3171688}, {"filename": "/raytrace.rec", "start": 3171688, "end": 3464838}, {"filename": "/sdcard.img", "start": 3464838, "end": 70573702}, {"filename": "/shell.rec", "start": 70573702, "end": 71216490}, {"filename": "/slideshow.rec", "start": 71216490, "end": 71739846}, {"filename": "/tunnel.rec", "start": 71739846, "end": 72015200}], "remote_package_size": 72015200});
 
   })();
 
-// end include: C:\Users\qubec\AppData\Local\Temp\tmp6ox7qt72.js
-// include: C:\Users\qubec\AppData\Local\Temp\tmpn55r0o08.js
+// end include: C:\Users\qubec\AppData\Local\Temp\tmpugmc0mr1.js
+// include: C:\Users\qubec\AppData\Local\Temp\tmpdq4hxm4u.js
 
     // All the pre-js content up to here must remain later on, we need to run
     // it.
     if (Module['$ww'] || (typeof ENVIRONMENT_IS_PTHREAD != 'undefined' && ENVIRONMENT_IS_PTHREAD)) Module['preRun'] = [];
     var necessaryPreJSTasks = Module['preRun'].slice();
-  // end include: C:\Users\qubec\AppData\Local\Temp\tmpn55r0o08.js
-// include: C:\Users\qubec\AppData\Local\Temp\tmpz1ov11xw.js
+  // end include: C:\Users\qubec\AppData\Local\Temp\tmpdq4hxm4u.js
+// include: C:\Users\qubec\AppData\Local\Temp\tmp3m9pw45b.js
 
     if (!Module['preRun']) throw 'Module.preRun should exist because file support used it; did a pre-js delete it?';
     necessaryPreJSTasks.forEach((task) => {
       if (Module['preRun'].indexOf(task) < 0) throw 'All preRun tasks that exist before user pre-js code should remain after; did you replace Module or modify Module.preRun?';
     });
-  // end include: C:\Users\qubec\AppData\Local\Temp\tmpz1ov11xw.js
+  // end include: C:\Users\qubec\AppData\Local\Temp\tmp3m9pw45b.js
 
 
 // Sometimes an existing Module object exists with properties

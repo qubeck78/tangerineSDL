@@ -47,7 +47,7 @@ uint32_t fetchData( uint32_t addr )
    else if( addr >= 0xf0000000 )
    {
       
-      switch( addr & 0xffff0000 )
+      switch( addr & 0xfff00000 )
       {
          uint32_t rv;
 
@@ -94,6 +94,13 @@ uint32_t fetchData( uint32_t addr )
             
             break;
 
+         case 0xf0900000:
+
+            //gfx pixel gen regs
+            return gfxPixelGenRegsReadReg( &tgctx->gfxPixelGenRegs, addr & 0xfffff );
+            
+            break;
+
       }
       return 0;
    }
@@ -132,7 +139,7 @@ uint32_t storeData( uint32_t addr, uint8_t mask, uint32_t data )
    //registers
    else if( addr >= 0xf0000000 )
    {
-      switch( addr & 0xffff0000 )
+      switch( addr & 0xfff00000 )
       {
          case 0xf0000000:
 
@@ -174,6 +181,13 @@ uint32_t storeData( uint32_t addr, uint8_t mask, uint32_t data )
             //sdram dma regs
             
             return sdramDMARegsWriteReg( &tgctx->sdramDMARegs, addr & 0xffff, data );
+            break;
+
+         case 0xf0900000:
+
+            //gfx pixel gen regs
+            
+            return gfxPixelGenRegsWriteReg( &tgctx->gfxPixelGenRegs, addr & 0xfffff, data );
             break;
 
       }
