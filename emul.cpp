@@ -15,7 +15,164 @@
 
 
 #include "emul.h"
+#include <cstdio>
 
+uint32_t rvReadCSR( emContext_t *ctx, uint32_t csr )
+{
+   switch( csr )
+   {
+      case _RV_CSR_MSTATUS:
+
+         return ctx->mstatus;
+         break;
+
+      case _RV_CSR_MISA:
+
+         //rv-32 IM
+
+         return 0b01000000000000000001000100000000;
+         break;
+
+      case _RV_CSR_MIE:
+
+         return ctx->mie;
+         break;
+
+      case _RV_CSR_MTVEC:
+
+         return ctx->mtvec;
+         break;
+
+      case _RV_CSR_MSTATUSH:
+
+         return ctx->mstatush;
+         break;
+
+      case _RV_CSR_MSCRATCH:
+
+         return ctx->mscratch;
+         break;
+
+      case _RV_CSR_MEPC:
+
+         return ctx->mepc;
+         break;
+
+      case _RV_CSR_MCAUSE:
+
+         return ctx->mcause;
+         break;
+
+      case _RV_CSR_MTVAL:
+
+         return ctx->mtval;
+         break;
+
+      case _RV_CSR_MIP:
+
+         return ctx->mip;
+         break;
+
+      case _RV_CSR_MHARTID:
+
+         return 0;
+         break;
+
+      default:
+
+         printf( "warning: unknown CSR read: 0x%x\n", csr );
+         return 0;
+         break;
+
+   }
+
+   return 0;
+}
+
+uint32_t rvWriteCSR( emContext_t *ctx, uint32_t csr, uint32_t value )
+{
+   switch( csr )
+   {
+      case _RV_CSR_MSTATUS:
+
+         ctx->mstatus = value;
+         return 0;
+         break;
+
+      case _RV_CSR_MISA:
+
+         printf( "warning: csr write to misa: 0x%x\n", value );
+         return 1;
+         break;
+
+      case _RV_CSR_MIE:
+
+         ctx->mie = value;
+         return 0;
+         break;
+
+      case _RV_CSR_MTVEC:
+
+         ctx->mtvec  = value & 0xfffffffc;
+
+         if( value & 3 )
+         {
+            printf( "warning: csr write to mtvec configures vectored interrupt ( unsupported )\n" );
+            return 1;
+         }
+
+         return 0;
+         break;
+
+      case _RV_CSR_MSTATUSH:
+
+         ctx->mstatush = value;
+         return 0;
+         break;
+
+      case _RV_CSR_MSCRATCH:
+
+         ctx->mscratch = value;
+         return 0;
+         break;
+
+      case _RV_CSR_MEPC:
+
+         ctx->mepc = value;
+         break;
+
+      case _RV_CSR_MCAUSE:
+
+         ctx->mcause = value;
+         break;
+
+      case _RV_CSR_MTVAL:
+
+         ctx->mtval = value;
+         break;
+
+      case _RV_CSR_MIP:
+
+         ctx->mip = value;
+         break;
+
+      case _RV_CSR_MHARTID:
+
+
+         printf( "warning: csr write to mhartid: 0x%x\n", value );
+         return 1;
+         break;
+
+      default:
+
+         printf( "warning: unknown CSR write: 0x%x, 0x%x\n", csr, value );
+         return 0;
+         break;
+
+   }
+
+   return 0;
+}
 
 
 uint32_t rvReset( emContext_t *ctx )
@@ -32,6 +189,17 @@ uint32_t rvReset( emContext_t *ctx )
    ctx->regs[2]   = 0x5a80;
 
    ctx->instrCounter = 0;
+
+   ctx->mstatus   = 0;
+   ctx->mie       = 0;
+   ctx->mtvec     = 0;
+   ctx->mstatush  = 0;
+   
+   ctx->mscratch  = 0;
+   ctx->mepc      = 0;
+   ctx->mcause    = 0;
+   ctx->mtval     = 0;
+   ctx->mip       = 0;
 
 
    return 0;
@@ -1210,25 +1378,163 @@ uint32_t rvStep( emContext_t *ctx )
             itsImm |= 0b11111111111111111111100000000000;
          }
 
-         if( funct3 == 0x0 )
+         switch( funct3 )
          {
-            if( itImm == 0x0 )
-            {
+
+            case 0x0:
+
+               switch( itImm )
+               {
+                  
+                  case 0x0:
+
+                     rv = _RVEMUL_OK;
+
+                     //ecall
+                     ctx->mepc   = ctx->pc;
+                     ctx->pc     = ( ctx->mtvec & 0xfffffffc ) - 4;
+
+                     ctx->mcause = 11;       //Environment call from M-mode
+                     break;
+
+                  case 0x1:
+                     
+                     //ebreak ( call builtin debugger )                  
+                     rv = _RVEMUL_EBREAK;
+
+
+                     /*
+                     //ebreak ( call debugger in emulated mode)
+                     ctx->mepc   = ctx->pc;
+                     ctx->pc     = ( ctx->mtvec & 0xfffffffc ) - 4;
+                     ctx->mcause = 3;     //Breakpoint
+                     */
+
+                     break;
+                  
+                  case 0b001100000010:
+
+                     rv = _RVEMUL_OK;
+
+                     //mret
+ 
+                     ctx->pc = ctx->mepc - 4;
+                     break;               
+
+               }
+
+               break;
+
+            case 0x1:
+
+               rv = _RVEMUL_OK;
+
+               //csrrw %s, %d, %s
+
+               if( rd )
+               {
+                  ctx->regs[ rd ] = rvReadCSR( ctx, itImm );
+               }
+
+               rvWriteCSR( ctx, itImm, ctx->regs[ rs1 ] );
                
-//               strcpy( outputBuffer, "ecall" );
+               break;
 
-            }else if( itImm == 0x1)
-            {
+            case 0x2:
 
-//             ebreak
-               rv = _RVEMUL_EBREAK;
+               rv = _RVEMUL_OK;
 
-            }
+               //csrrs %s, %d, %s", regDName, ctx->itImm, regS1Name );
+
+               i = rvReadCSR( ctx, itImm );
+
+               if( rd )
+               {
+                  ctx->regs[ rd ] = i;
+               }
+
+               i |= ctx->regs[ rs1 ];
+
+               rvWriteCSR( ctx, itImm, i );
+
+               break;
+
+            case 0x3:
+
+               rv = _RVEMUL_OK;
+
+               //csrrc %s, %d, %s", regDName, ctx->itImm, regS1Name );
+
+               i = rvReadCSR( ctx, itImm );
+
+               if( rd )
+               {
+                  ctx->regs[ rd ] = i;
+               }
+
+               i &= ctx->regs[ rs1 ] ^ 0xffffffff;
+
+               rvWriteCSR( ctx, itImm, i );
+
+               break;
+
+            case 0x5:
+
+               rv = _RVEMUL_OK;
+
+               //csrrwi %s, %d, %d", regDName, ctx->itImm, ctx->rs1 );
+
+               if( rd )
+               {
+                  ctx->regs[ rd ] = rvReadCSR( ctx, itImm );
+               }
+
+               rvWriteCSR( ctx, itImm, rs1 );
+
+               break;
+
+            case 0x6:
+
+               rv = _RVEMUL_OK;
+
+               //csrrsi %s, %d, %d", regDName, ctx->itImm, ctx->rs1 );
+
+               i = rvReadCSR( ctx, itImm );
+
+               if( rd )
+               {
+                  ctx->regs[ rd ] = i;
+               }
+
+               i |= rs1;
+
+               rvWriteCSR( ctx, itImm, i );
+
+               break;
+
+            case 0x7:
+
+               rv = _RVEMUL_OK;
+
+              //csrrci %s, %d, %d", regDName, ctx->itImm, ctx->rs1 );
+
+               i = rvReadCSR( ctx, itImm );
+
+               if( rd )
+               {
+                  ctx->regs[ rd ] = i;
+               }
+
+               i &= rs1 ^ 0xffffffff;
+
+               rvWriteCSR( ctx, itImm, i );
+
+               break;
+
          }
 
          break;
  
-
    }
 
    //advance pc
