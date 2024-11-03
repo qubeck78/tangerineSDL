@@ -628,19 +628,94 @@ uint32_t dsDisassemble( dsContext_t *ctx, char *outputBuffer )
       //I - type
       case 0b1110011:
 
-         if( ctx->funct3 == 0x0 )
+         nameRegister( ctx->rd,  regDName );
+         nameRegister( ctx->rs1, regS1Name );
+
+         switch( ctx->funct3 )
          {
-            if( ctx->itImm == 0x0 )
-            {
+
+
+            case 0x0:
+
+
+               switch( ctx->itImm )
+               {
+
+                  case 0x0:
+                     
+                     strcpy( outputBuffer, "ecall" );
+
+                     break;
+
+                  case 0x1:
+                     
+                     strcpy( outputBuffer, "ebreak" );
+
+                     break;
+
                
-               strcpy( outputBuffer, "ecall" );
+                  case 0b000100000010:
 
-            }else if( ctx->itImm == 0x1)
-            {
+                     strcpy( outputBuffer, "sret" );
 
-               strcpy( outputBuffer, "ebreak" );
+                     break;
 
-            }
+                  case 0b001100000010:
+
+                     strcpy( outputBuffer, "mret" );
+
+                     break;
+
+                  case 0b011100000010:
+
+                     strcpy( outputBuffer, "mnret" );
+
+                     break;
+
+                  case 0b000100000101:
+
+                     strcpy( outputBuffer, "wfi" );
+
+                     break;
+               }
+               
+               break;
+
+            case 0x1:
+
+               sprintf( outputBuffer, "csrrw %s, %d, %s", regDName, ctx->itImm, regS1Name );
+
+               break;
+
+            case 0x2:
+
+               sprintf( outputBuffer, "csrrs %s, %d, %s", regDName, ctx->itImm, regS1Name );
+
+               break;
+
+            case 0x3:
+
+               sprintf( outputBuffer, "csrrc %s, %d, %s", regDName, ctx->itImm, regS1Name );
+
+               break;
+
+            case 0x5:
+
+               sprintf( outputBuffer, "csrrwi %s, %d, %d", regDName, ctx->itImm, ctx->rs1 );
+
+               break;
+
+            case 0x6:
+
+               sprintf( outputBuffer, "csrrsi %s, %d, %d", regDName, ctx->itImm, ctx->rs1 );
+
+               break;
+
+            case 0x7:
+
+               sprintf( outputBuffer, "csrrci %s, %d, %d", regDName, ctx->itImm, ctx->rs1 );
+
+               break;
          }
 
          break; 
