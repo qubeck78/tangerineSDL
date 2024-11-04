@@ -6,13 +6,16 @@ uint32_t rootRegsInit( tgRootRegs_t *regs )
 {
 
    regs->id             = 0x80000000;
-   regs->version        = 0x20240828;
+   regs->version        = 0x20241104;
 
    regs->videoMuxMode   = 0x0;
    regs->videoVSync     = 1;
    
    regs->tickTimerValue = SDL_GetTicks();
    regs->frameTimer     = 0;
+
+   regs->mtime          = 0;
+   regs->mtimeCmp       = 0;
 
    return RV_OK;
 
@@ -87,6 +90,28 @@ uint32_t rootRegsReadReg(  tgRootRegs_t *regs, uint16_t addr )
          return regs->frameTimer;
          
          break;
+
+      case 0x0a:
+
+         //mtime lo
+         return (uint32_t)( regs->mtime & 0xffffffff );
+
+      case 0x0b:
+
+         //mtime hi
+         return (uint32_t)( ( regs->mtime >> 32 ) & 0xffffffff );
+
+      case 0x0c:
+
+         //mtimeCmp lo
+         return (uint32_t)( regs->mtimeCmp & 0xffffffff );
+
+      case 0x0d:
+
+         //mtimeCmp hi
+         return (uint32_t)( ( regs->mtimeCmp >> 32 ) & 0xffffffff );
+
+
    }
 
    return 0;
@@ -126,6 +151,34 @@ uint32_t rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, uint16_t ad
          //frame timer
 
          regs->frameTimer = 0;
+
+         break;
+
+      case 0x0a:
+
+         //mtime lo
+         //return (uint32_t)( regs->mtime & 0xffffffff );
+         break;
+
+      case 0x0b:
+
+         //mtime hi
+         //return (uint32_t)( ( regs->mtime >> 32 ) & 0xffffffff );
+         break;
+
+      case 0x0c:
+
+         //mtimeCmp lo
+         regs->mtimeCmp &= 0xffffffff00000000;
+         regs->mtimeCmp |= (uint64_t)value;
+
+         break;
+
+      case 0x0d:
+
+         //mtimeCmp hi
+         regs->mtimeCmp &= 0x00000000ffffffff;
+         regs->mtimeCmp |= ( (uint64_t) value ) << 32;
 
          break;
    }

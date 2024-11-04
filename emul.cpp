@@ -243,8 +243,7 @@ uint32_t rvStep( emContext_t *ctx )
    uint32_t j;
 
    uint32_t rv;
-
-
+   
    //fetch instruction
 
    ctx->instruction  = ctx->fetchInstruction( ctx->pc );

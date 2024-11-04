@@ -42,6 +42,7 @@ void mainLoop()
 {
    uint32_t cpurv;
    uint32_t i;
+   uint32_t j;
 
    if( tgctx.debuggerActive )
    {
@@ -67,18 +68,24 @@ void mainLoop()
    }
    else
    {
-      for( i = 0; i < 1000000; i++ )
+
+      for( j = 0; j < 1000; j++ )
       {
-         cpurv = rvStep( &tgctx.cpuctx );
-         
-         if( cpurv )
+         for( i = 0; i < 1000; i++ )
          {
-            tgctx.debuggerActive = 1;  //init & run debugger
-            break;
+            cpurv = rvStep( &tgctx.cpuctx );
+            
+            if( cpurv )
+            {
+               tgctx.debuggerActive = 1;  //init & run debugger
+               break;
+            }
+
          }
 
+         tgctx.rootRegs.mtime += 1000;
+         
       }
-
       tgRedrawScreen( &tgctx );
 
       tgctx.rootRegs.frameTimer++;
