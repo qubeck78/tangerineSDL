@@ -1541,3 +1541,17 @@ uint32_t rvStep( emContext_t *ctx )
 
    return rv;
 }
+
+uint32_t rvTriggerMtimeIRQ( emContext_t *ctx )
+{
+
+   if( ctx->mstatus & 0x08 )
+   {
+
+      ctx->mepc   = ctx->pc;
+      ctx->pc     = ctx->mtvec & 0xfffffffc;
+
+   }
+
+   return _RVEMUL_OK;
+}

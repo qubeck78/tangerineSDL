@@ -83,9 +83,25 @@ void mainLoop()
 
          }
 
+         if( tgctx.rootRegs.mtime < tgctx.rootRegs.mtimeCmp )
+         {
+            tgctx.mtimeIrqTriggered = 0;
+         }
+
          tgctx.rootRegs.mtime += 1000;
          
+         if( ( tgctx.rootRegs.mtime >= tgctx.rootRegs.mtimeCmp ) && ( tgctx.mtimeIrqTriggered == 0 ) )
+         {
+            //trigger mtime irq
+
+            rvTriggerMtimeIRQ( &tgctx.cpuctx );
+            
+            tgctx.mtimeIrqTriggered = 1;
+
+         }
+
       }
+      
       tgRedrawScreen( &tgctx );
 
       tgctx.rootRegs.frameTimer++;
@@ -115,7 +131,7 @@ int main( int argc,  char** argv )
    uint32_t i;
 
 
-   printf( "TangerineRiscVSOC emulator B20241102 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20241110 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access

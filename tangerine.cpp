@@ -10,13 +10,14 @@ uint32_t tgInit( tangerineCtx_t *ctx )
    FILE  *in;
    uint32_t i;
 
-   ctx->window          = NULL;
-   ctx->renderer        = NULL;
-   ctx->texture         = NULL;
-   ctx->dmaRAM          = NULL;
-   ctx->fastRAM         = NULL;
-   ctx->systemRAM       = NULL;
-   ctx->debuggerActive  = 0;
+   ctx->window             = NULL;
+   ctx->renderer           = NULL;
+   ctx->texture            = NULL;
+   ctx->dmaRAM             = NULL;
+   ctx->fastRAM            = NULL;
+   ctx->systemRAM          = NULL;
+   ctx->debuggerActive     = 0;
+   ctx->mtimeIrqTriggered  = 0;
 
    if( SDL_Init( SDL_INIT_TIMER |  SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO ) ) 
    {

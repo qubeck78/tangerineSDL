@@ -98,5 +98,6 @@ uint32_t rvReset( emContext_t *ctx );
 
 uint32_t rvStep( emContext_t *ctx );
 
+uint32_t rvTriggerMtimeIRQ( emContext_t *ctx );
 
 #endif

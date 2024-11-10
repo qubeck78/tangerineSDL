@@ -56,7 +56,8 @@ typedef struct _tangerineCtx_t
    uint32_t             displayFullscreen;
    uint32_t             exitMainLoop;
    uint32_t             debuggerActive;
-   
+   uint32_t             mtimeIrqTriggered;
+    
    void                *dmaRAM;
    void                *fastRAM;
    void                *systemRAM;

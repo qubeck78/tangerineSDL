@@ -6,7 +6,7 @@ uint32_t rootRegsInit( tgRootRegs_t *regs )
 {
 
    regs->id             = 0x80000000;
-   regs->version        = 0x20241104;
+   regs->version        = 0x20241110;
 
    regs->videoMuxMode   = 0x0;
    regs->videoVSync     = 1;
