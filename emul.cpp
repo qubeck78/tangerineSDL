@@ -243,8 +243,7 @@ uint32_t rvStep( emContext_t *ctx )
    uint32_t j;
 
    uint32_t rv;
-
-
+   
    //fetch instruction
 
    ctx->instruction  = ctx->fetchInstruction( ctx->pc );
@@ -1541,4 +1540,18 @@ uint32_t rvStep( emContext_t *ctx )
    ctx->pc += 4;
 
    return rv;
+}
+
+uint32_t rvTriggerMtimeIRQ( emContext_t *ctx )
+{
+
+   if( ctx->mstatus & 0x08 )
+   {
+
+      ctx->mepc   = ctx->pc;
+      ctx->pc     = ctx->mtvec & 0xfffffffc;
+
+   }
+
+   return _RVEMUL_OK;
 }

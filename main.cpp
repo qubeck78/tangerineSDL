@@ -42,6 +42,7 @@ void mainLoop()
 {
    uint32_t cpurv;
    uint32_t i;
+   uint32_t j;
 
    if( tgctx.debuggerActive )
    {
@@ -67,18 +68,40 @@ void mainLoop()
    }
    else
    {
-      for( i = 0; i < 1000000; i++ )
+
+      for( j = 0; j < 1000; j++ )
       {
-         cpurv = rvStep( &tgctx.cpuctx );
-         
-         if( cpurv )
+         for( i = 0; i < 1000; i++ )
          {
-            tgctx.debuggerActive = 1;  //init & run debugger
-            break;
+            cpurv = rvStep( &tgctx.cpuctx );
+            
+            if( cpurv )
+            {
+               tgctx.debuggerActive = 1;  //init & run debugger
+               break;
+            }
+
+         }
+
+         if( tgctx.rootRegs.mtime < tgctx.rootRegs.mtimeCmp )
+         {
+            tgctx.mtimeIrqTriggered = 0;
+         }
+
+         tgctx.rootRegs.mtime += 1000;
+         
+         if( ( tgctx.rootRegs.mtime >= tgctx.rootRegs.mtimeCmp ) && ( tgctx.mtimeIrqTriggered == 0 ) )
+         {
+            //trigger mtime irq
+
+            rvTriggerMtimeIRQ( &tgctx.cpuctx );
+            
+            tgctx.mtimeIrqTriggered = 1;
+
          }
 
       }
-
+      
       tgRedrawScreen( &tgctx );
 
       tgctx.rootRegs.frameTimer++;
@@ -108,7 +131,7 @@ int main( int argc,  char** argv )
    uint32_t i;
 
 
-   printf( "TangerineRiscVSOC emulator B20241102 -qUBECk78@wp.pl-\n\n" );
+   printf( "TangerineRiscVSOC emulator B20241110 -qUBECk78@wp.pl-\n\n" );
 
 
    //memory access
