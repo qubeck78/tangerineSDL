@@ -88,7 +88,7 @@ void mainLoop()
             tgctx.mtimeIrqTriggered = 0;
          }
 
-         tgctx.rootRegs.mtime += 1000;
+         tgctx.rootRegs.mtime += 2000;
          
          if( ( tgctx.rootRegs.mtime >= tgctx.rootRegs.mtimeCmp ) && ( tgctx.mtimeIrqTriggered == 0 ) )
          {

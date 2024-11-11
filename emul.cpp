@@ -201,6 +201,7 @@ uint32_t rvReset( emContext_t *ctx )
    ctx->mtval     = 0;
    ctx->mip       = 0;
 
+   ctx->inIrq     = 0;
 
    return 0;
 }
@@ -1417,7 +1418,9 @@ uint32_t rvStep( emContext_t *ctx )
 
                      //mret
  
-                     ctx->pc = ctx->mepc - 4;
+                     ctx->pc     = ctx->mepc - 4;
+                     ctx->inIrq  = 0;
+
                      break;               
 
                }
@@ -1545,11 +1548,16 @@ uint32_t rvStep( emContext_t *ctx )
 uint32_t rvTriggerMtimeIRQ( emContext_t *ctx )
 {
 
-   if( ctx->mstatus & 0x08 )
+   //check if machine mode interrupts enabled
+   //do not nest irq
+
+   if( ( ctx->mstatus & 0x08 ) && ( !ctx->inIrq ) )
    {
 
       ctx->mepc   = ctx->pc;
       ctx->pc     = ctx->mtvec & 0xfffffffc;
+      ctx->mcause = 0x80000000 | 7;          //machine timer interrupt
+      ctx->inIrq  = 1;
 
    }
 

@@ -88,6 +88,9 @@ typedef struct _emContext_t
    //0x344
    uint32_t  mip;
 
+   //irq processing flag
+   uint32_t  inIrq;
+
 }emContext_t;
 
 
