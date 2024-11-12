@@ -101,10 +101,17 @@ uint32_t fetchData( uint32_t addr )
             
             break;
 
+         default:
+            
+            //printf( "Warning: memio - unknown register read:%x\n", addr );
+            break;
       }
       return 0;
    }
-
+   else
+   {
+      printf( "Warning: memio - unknown read:%x\n", addr );
+   }
    return 0;
 }
 
@@ -190,8 +197,16 @@ uint32_t storeData( uint32_t addr, uint8_t mask, uint32_t data )
             return gfxPixelGenRegsWriteReg( &tgctx->gfxPixelGenRegs, addr & 0xfffff, data );
             break;
 
+         default:
+            
+            //printf( "Warning: memio - unknown register write:%x, %x\n", addr, data );
+            break;
       }
    }   
+   else
+   {
+      printf( "Warning: memio - unknown write:%x, %x\n", addr, data );
+   }
 
    if( storePtr )
    {

@@ -1551,8 +1551,19 @@ uint32_t rvTriggerMtimeIRQ( emContext_t *ctx )
    //check if machine mode interrupts enabled
    //do not nest irq
 
+   if( ctx->inIrq )
+   {
+      printf( "Warning: nested mtime IRQ!\n" );
+   }
+
+   if( ! ( ctx->mstatus & 0x08 ) )
+   {
+      printf( "Warning: mtime irq while irq disabled\n" );
+   }
+
    if( ( ctx->mstatus & 0x08 ) && ( !ctx->inIrq ) )
    {
+     // printf( "." );
 
       ctx->mepc   = ctx->pc;
       ctx->pc     = ctx->mtvec & 0xfffffffc;

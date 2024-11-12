@@ -75,6 +75,6 @@ clean:
 
 
 run: $(TARGET).exe
-	cd bin && start $(TARGET).exe shell.rec
+	cd bin && start $(TARGET).exe freeRTOSTest.rec 
 	
 	

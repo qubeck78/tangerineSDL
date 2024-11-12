@@ -83,6 +83,11 @@ void mainLoop()
 
          }
 
+         if( tgctx.debuggerActive )
+         {
+            break;
+         }
+
          if( tgctx.rootRegs.mtime < tgctx.rootRegs.mtimeCmp )
          {
             tgctx.mtimeIrqTriggered = 0;

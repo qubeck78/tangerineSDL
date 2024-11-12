@@ -168,6 +168,7 @@ uint32_t rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, uint16_t ad
 
       case 0x0c:
 
+         //printf( "mtimeCmpLo:%x\n",value );
          //mtimeCmp lo
          regs->mtimeCmp &= 0xffffffff00000000;
          regs->mtimeCmp |= (uint64_t)value;
@@ -175,6 +176,8 @@ uint32_t rootRegsWriteReg(  tgRootRegs_t *regs, sdcContext_t *sdctx, uint16_t ad
          break;
 
       case 0x0d:
+
+         //printf( "mtimeCmpHi:%x\n",value );
 
          //mtimeCmp hi
          regs->mtimeCmp &= 0x00000000ffffffff;
